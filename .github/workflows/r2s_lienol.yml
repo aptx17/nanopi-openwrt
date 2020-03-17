@@ -6,15 +6,15 @@ on:
       - master
     paths:
       - '.github/workflows/r2s_lienol.yml'
-  schedule:
-    - cron: '00 19 * * *'
+ # schedule:
+ #   - cron: '00 19 * * *'
       
 jobs:
 
   build:
     
     runs-on: ubuntu-latest
-    if: github.repository == 'klever1988/nanopi-openwrt'
+    if: github.repository == 'aptx17/nanopi-openwrt'
     
     steps:
       
