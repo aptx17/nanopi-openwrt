@@ -1,4 +1,4 @@
-name: r2s Lienol版openwrt
+name: r2s Lienol版openwrt-test 
 
 on:
   push:
