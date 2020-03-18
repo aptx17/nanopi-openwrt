@@ -107,5 +107,5 @@ jobs:
         id: upload_artifact 
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi-R2S-RK3328-test
+          name: NanoPi R2S-RK3328-test
           path: ./artifact/
