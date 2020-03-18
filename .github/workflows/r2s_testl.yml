@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/r2s-test.yml'
+      - '.github/workflows/r2s_test.yml'
  # schedule:
  #   - cron: '00 19 * * *'
       
@@ -101,8 +101,6 @@ jobs:
           mv friendlywrt-rk3328/out/*img* ./artifact/
           cp friendlywrt-rk3328/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
-          release_tag="R2S-Lienol-$(date +%Y-%m-%d)"
-          echo "##[set-output name=release_tag;]$release_tag"
       - name: Upload Artifact
         id: upload_artifact 
         uses: actions/upload-artifact@master
