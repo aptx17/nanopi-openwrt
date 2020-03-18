@@ -11,7 +11,6 @@ CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 CONFIG_PACKAGE_collectd-mod-cpu=y
 CONFIG_PACKAGE_collectd-mod-interface=y
-
 CONFIG_PACKAGE_collectd-mod-load=y
 CONFIG_PACKAGE_collectd-mod-memory=y
 CONFIG_PACKAGE_collectd-mod-network=y
@@ -25,25 +24,12 @@ CONFIG_PACKAGE_lrzsz=y
 CONFIG_PACKAGE_nano=y
 CONFIG_PACKAGE_diffutils=y
 CONFIG_PACKAGE_vim-fuller=y
-
-
-
 CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
-
-
 CONFIG_PACKAGE_luci-app-firewall=y
-
-
-
-
 CONFIG_PACKAGE_luci-app-opkg=y
-
-
-
 CONFIG_PACKAGE_luci-app-uhttpd=y
 CONFIG_PACKAGE_luci-app-upnp=y
-
 CONFIG_PACKAGE_luci-app-watchcat=y
 CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-theme-material=y
@@ -55,5 +41,21 @@ CONFIG_PACKAGE_luci-theme-material=y
 CONFIG_PACKAGE_luci-theme-netgear-mc=y
 CONFIG_PACKAGE_luci-theme-openwrt=y
 
-CONFIG_PACKAGE_autocore=y
+# CONFIG_PACKAGE_luci-app-control-mia is not set
+# CONFIG_PACKAGE_luci-app-control-timewol is not set
+# CONFIG_PACKAGE_luci-app-control-weburl is not set
+# CONFIG_PACKAGE_luci-app-fileassistant is not set
+# CONFIG_PACKAGE_luci-app-pppoe-relay is not set
+# CONFIG_PACKAGE_luci-app-pppoe-server is not set
+# CONFIG_PACKAGE_luci-app-pptp-vpnserver-manyusers is not set
+# CONFIG_PACKAGE_luci-app-vlmcsd is not set
+# CONFIG_PACKAGE_luci-app-wol is not set
+# CONFIG_PACKAGE_luci-app-passwall is not set
+# CONFIG_PACKAGE_vlmcsd is not set
+# CONFIG_PACKAGE_rp-pppoe-relay is not set
+# CONFIG_PACKAGE_rp-pppoe-server is not set
+# CONFIG_PACKAGE_v2ray is not set
+# CONFIG_PACKAGE_pptpd is not set
+# CONFIG_PACKAGE_haproxy is not set
 
+CONFIG_PACKAGE_autocore=y
