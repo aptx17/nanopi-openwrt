@@ -22,3 +22,4 @@ index df42f3c7..c81e237d 100755
 +	local maxfreq=$(uci_get_by_type settings maxfreq 1296000)
  	local upthreshold=$(uci_get_by_type settings upthreshold 50)
  	local factor=$(uci_get_by_type settings factor 10)
+
