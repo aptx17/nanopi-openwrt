@@ -52,11 +52,6 @@ jobs:
           . ../remove_unused_config.sh
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
           cat ../base_rk3328.seed > configs/config_rk3328
-          echo '
-          # CONFIG_PACKAGE_luci-app-cpufreq is not set
-          # CONFIG_DEFAULT_luci-app-cpufreq is not set
-          # CONFIG_V2RAY_COMPRESS_UPX is not set
-          ' >> configs/config_rk3328
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
@@ -65,6 +60,14 @@ jobs:
           git checkout upstream/master -- feeds.conf.default
           cd package/lean/
           #git clone https://github.com/jerrykuku/lua-maxminddb.git
+          #git clone https://github.com/jerrykuku/luci-app-vssr.git
+          #cd luci-app-vssr/root/etc/
+          #echo 'china_ssr.txt
+          #config/black.list
+          #config/white.list
+          #dnsmasq.oversea/oversea_list.conf
+          #dnsmasq.ssr/ad.conf
+          #dnsmasq.ssr/gfw_base.conf' | xargs rm
           #cd ../../../
           rm -rf luci-theme-argon
           git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
