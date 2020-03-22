@@ -53,6 +53,8 @@ jobs:
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
           cat ../base_rk3328.seed > configs/config_rk3328
           echo '
+          # CONFIG_PACKAGE_luci-app-cpufreq is not set
+          # CONFIG_DEFAULT_luci-app-cpufreq is not set
           # CONFIG_V2RAY_COMPRESS_UPX is not set
           ' >> configs/config_rk3328
           cd friendlywrt
