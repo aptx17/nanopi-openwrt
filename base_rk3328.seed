@@ -10,7 +10,6 @@ CONFIG_LUCI_LANG_en=y
 CONFIG_LUCI_LANG_zh-cn=y
 CONFIG_LUCI_LANG_zh-tw=y
 CONFIG_PACKAGE_bash=y
-CONFIG_PACKAGE_uboot-envtools=y
 CONFIG_PACKAGE_kmod-ikconfig=y
 CONFIG_PACKAGE_kmod-tun=y
 CONFIG_PACKAGE_kmod-cryptodev=y
