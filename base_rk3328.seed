@@ -11,7 +11,6 @@ CONFIG_LUCI_LANG_zh-cn=y
 CONFIG_LUCI_LANG_zh-tw=y
 CONFIG_PACKAGE_bash=y
 CONFIG_PACKAGE_kmod-ikconfig=y
-CONFIG_PACKAGE_kmod-tun=y
 CONFIG_PACKAGE_kmod-cryptodev=y
 CONFIG_PACKAGE_iptables-mod-tproxy=y
 CONFIG_PACKAGE_kmod-ipt-tproxy=y
@@ -117,6 +116,7 @@ CONFIG_PACKAGE_openssl-util=y
 # CONFIG_PACKAGE_kmod-sched-cake is not set
 # CONFIG_PACKAGE_kmod-sched-core is not set
 # CONFIG_PACKAGE_libnatpmp is not set
+# CONFIG_PACKAGE_kmod-tun is not set
 # CONFIG_PACKAGE_luci-app-accesscontrol is not set
 # CONFIG_PACKAGE_luci-app-nlbwmon is not set
 # CONFIG_PACKAGE_luci-app-sqm is not set
