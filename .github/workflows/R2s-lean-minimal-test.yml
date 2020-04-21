@@ -46,7 +46,7 @@ jobs:
           cd friendlywrt/ && git fetch --unshallow
       - name: Patch Kernel
         run: |
-          . patch_kernel_5.4.22.sh
+          . patch_kernel_5.4.sh
       - name: Mods
         run: |
           cd friendlywrt-rk3328
@@ -61,8 +61,10 @@ jobs:
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
           git revert --no-edit 8faac30089ce616940b3e96c4f4d900aeb6b9fcb
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
+          sed -i '5s/#src-git/src-git/g' feeds.conf.default
           cd package/lean/
           #git clone https://github.com/jerrykuku/lua-maxminddb.git
           #git clone https://github.com/jerrykuku/luci-app-vssr.git
@@ -85,6 +87,7 @@ jobs:
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
+          echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
