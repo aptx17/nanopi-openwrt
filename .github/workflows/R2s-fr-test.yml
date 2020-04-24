@@ -64,7 +64,7 @@ jobs:
           #git revert --no-edit f092ca098e80c667b10cdd1dba328506a2673c1d
           #git checkout upstream/master -- feeds.conf.default
           cd ../../
-          git apply ../../enable_autocore.diff
+          #git apply ../../enable_autocore.diff
           #git apply ../../fix_cpufreq.diff
           #sed -i '/exit/i\find /etc/rc.d/ -name *docker* -delete' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
