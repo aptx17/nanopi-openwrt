@@ -12,7 +12,6 @@ cp -a ./target/linux/generic/files/* ../kernel/
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
-./scripts/patch-kernel.sh ../kernel target/linux/octeontx/patches-5.4
 cd ../
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
