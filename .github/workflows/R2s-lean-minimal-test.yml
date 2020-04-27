@@ -46,10 +46,12 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
+          mv kernel/arch/arm64/configs/nanopi-r2_linux_defconfig .
           rm -rf kernel
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.4.y/kernel
           mv linux-5.4.y/kernel .
           mv ../scripts/main.c kernel/net/bpfilter
+          mv nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
