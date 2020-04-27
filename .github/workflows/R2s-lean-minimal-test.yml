@@ -43,15 +43,13 @@ jobs:
           repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
           repo sync -c --no-tags --no-clone-bundle -j8
           cd friendlywrt/ && git fetch --unshallow
+          mv ../scripts/main.c kernel/net/bpfilter
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv kernel/arch/arm64/configs/nanopi-r2_linux_defconfig .
-          rm -rf kernel
+          rm -rf kernel/kernel
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.4.y/kernel
-          mv linux-5.4.y/kernel .
-          mv ../scripts/main.c kernel/net/bpfilter
-          mv nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          mv linux-5.4.y/kernel kernel 
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
