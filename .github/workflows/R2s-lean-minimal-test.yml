@@ -49,7 +49,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           rm -rf kernel
-          git clone https://git.kernel.org/stable/h/linux-5.4.y kernel
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel?h=linux-5.4.y
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
