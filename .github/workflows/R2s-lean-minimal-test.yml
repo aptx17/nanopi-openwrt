@@ -44,6 +44,12 @@ jobs:
           repo sync -c --no-tags --no-clone-bundle -j8
           mv ../scripts/main.c kernel/net/bpfilter
           cd friendlywrt/ && git fetch --unshallow
+      - name: Update kernel
+        run: |
+          cd friendlywrt-rk3328
+          rm -rf kernel/kernel
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.4.y/kernel
+          mv linux-5.4.y/kernel kernel
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
