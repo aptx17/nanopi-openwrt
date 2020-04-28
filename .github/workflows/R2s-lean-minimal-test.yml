@@ -47,9 +47,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           rm -rf kernel
-          git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.4.y
-          mv linux-5.4.y kernel
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/fanck0605/kernel-rockchip kernel
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
