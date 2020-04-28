@@ -47,7 +47,7 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          rm -rf kernel/kernel
+          rm -rf kernel
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.4.y
           mv linux-5.4.y kernel
       - name: Patch Kernel
