@@ -1,5 +1,5 @@
 cd friendlywrt-rk3328
-mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+#mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
 cd kernel/
 git apply ../../add_fullconenat.diff
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
