@@ -120,5 +120,5 @@ jobs:
         id: upload_artifact 
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-lean-minimal-test
+          name: NanoPi R2S-test-5.4.38
           path: ./artifact/
