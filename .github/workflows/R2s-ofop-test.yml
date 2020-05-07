@@ -60,6 +60,11 @@ jobs:
           . patch_kernel_5.4.sh
       - name: Mods
         run: |
+          cd ..
+          latest_feed="$(curl -s https://github.com/openwrt/openwrt/releases |grep -Eo "v[0-9\.]+.tar.gz" |sed -n 1p |sed 's/v//g' |sed 's/.tar.gz//g')"
+          sed -i 's,19.07.1,'"${latest_feed}"',g' device/friendlyelec/rk3328/common-files/etc/opkg/distfeeds.conf
+          sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3328/default-settings/install.sh
+          sed -i 's,./scripts,#./scripts,g' scripts/mk-friendlywrt.sh
           cd friendlywrt-rk3328
           . ../remove_unused_config.sh
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
