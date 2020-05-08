@@ -77,6 +77,16 @@ jobs:
           rm -f ./package/base-files/files/etc/banner
           rm -f ./package/base-files/files/bin/config_generate
           sed -i 's,performance,ondemand,g' target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
+          cd ..
+          mkdir opofficial
+          latest_release="$(curl -s https://github.com/openwrt/openwrt/releases |grep -Eo "v[0-9\.]+.tar.gz" |sed -n 1p)"
+          curl -LO "https://github.com/openwrt/openwrt/archive/${latest_release}"
+          tar zxvf ${latest_release}  --strip-components 1 -C ./opofficial
+          cp -f ./opofficial/include/version.mk ./friendlywrt/include/version.mk
+          cp -f ./opofficial/package/base-files/image-config.in ./friendlywrt/package/base-files/image-config.in
+          cp -f ./opofficial/package/base-files/files/etc/banner ./friendlywrt/package/base-files/files/etc/banner
+          cp -f ./opofficial/package/base-files/files/bin/config_generate ./friendlywrt/package/base-files/files/bin/config_generate
+          cd ../../
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
