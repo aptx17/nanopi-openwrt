@@ -3,8 +3,6 @@ cd kernel/
 git apply ../../add_fullconenat.diff
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
 git apply RK3328-enable-1512mhz-opp.patch
-wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-current/board-rk3328-roc-cc-dts-enable-dmc.patch
-git apply board-rk3328-roc-cc-dts-enable-dmc.patch
 cd ../
 git clone --single-branch https://github.com/openwrt/openwrt.git --depth=1
 cd openwrt
