@@ -104,5 +104,5 @@ jobs:
         id: upload_artifact 
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-test-5.4.39
+          name: NanoPi R2S-test-5.4.40
           path: ./artifact/
