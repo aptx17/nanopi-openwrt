@@ -60,8 +60,6 @@ jobs:
           . patch_kernel_5.4.sh
       - name: Mods
         run: |
-          cd ../
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
           cd friendlywrt-rk3328
           . ../remove_unused_config.sh
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
