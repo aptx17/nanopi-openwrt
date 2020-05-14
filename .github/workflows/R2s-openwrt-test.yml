@@ -54,7 +54,7 @@ jobs:
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git rebase linux/linux-5.4.y
           cd ../
-          mv nanopi-r2_linux_defconfig kernel/arch/arm64/configs 
+          mv ../nanopi-r2_linux_defconfig kernel/arch/arm64/configs 
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
