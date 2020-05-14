@@ -8,7 +8,6 @@ on:
       - '.github/workflows/R2s-openwrt-test.yml'
 #  schedule:
  #   - cron: '10 00 * * *'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -88,7 +87,6 @@ jobs:
         run: |
           gzip friendlywrt-rk3328/out/*.img
       - name: Assemble Artifact
-        id: assemble_artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
@@ -96,8 +94,7 @@ jobs:
           cp friendlywrt-rk3328/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
-        id: upload_artifact 
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-test-5.4.40
+          name: NanoPi R2S-test-5.4.41
           path: ./artifact/
