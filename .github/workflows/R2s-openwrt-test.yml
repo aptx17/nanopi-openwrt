@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/R2s-openwrt-test.yml'
 #  schedule:
- #   - cron: '10 00 * * *'
+ #   - cron: '10 10 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,11 +42,11 @@ jobs:
           cd friendlywrt-rk3328
           rm -rf kernel
           git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/fanck0605/kernel-rockchip kernel
-          cd kernel
-          git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-          git fetch linux
-          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git rebase linux/linux-5.4.y
+          #cd kernel
+          #git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+          #git fetch linux
+          #git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
+          #git rebase linux/linux-5.4.y
           cd ../
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
