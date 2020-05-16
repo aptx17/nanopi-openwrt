@@ -8,10 +8,12 @@ on:
       - '.github/workflows/R2s-openwrt-test.yml'
 #  schedule:
  #   - cron: '10 10 * * *'
+   
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.repository == 'aptx17/nanopi-openwrt'
+    
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -42,12 +44,12 @@ jobs:
           cd friendlywrt-rk3328
           rm -rf kernel
           git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/fanck0605/kernel-rockchip kernel
-          #cd kernel
-          #git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-          #git fetch linux
-          #git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          #git rebase linux/linux-5.4.y
-          #cd ../
+          cd kernel
+          git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+          git fetch linux
+          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
+          git rebase linux/linux-5.4.y
+          cd ../
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
         run: |
@@ -75,6 +77,7 @@ jobs:
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
+          sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3328/default-settings/install.sh
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
           mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
@@ -85,6 +88,18 @@ jobs:
           cd friendlywrt-rk3328
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r2s.mk
+      - name: Fix 1001
+        run: |
+          sudo df -lh
+          lodev=$(sudo losetup -f)
+          echo "found unused loop dev $lodev"
+          sudo losetup -P ${lodev} friendlywrt-rk3328/out/*.img
+          sudo rm -rf /mnt/friendlywrt-tmp
+          sudo mkdir -p /mnt/friendlywrt-tmp
+          sudo mount ${lodev}p1 /mnt/friendlywrt-tmp
+          sudo chown -R root:root /mnt/friendlywrt-tmp
+          sudo umount /mnt/friendlywrt-tmp
+          sudo losetup -d ${lodev}
       - name: Zip Files
         run: |
           gzip friendlywrt-rk3328/out/*.img
