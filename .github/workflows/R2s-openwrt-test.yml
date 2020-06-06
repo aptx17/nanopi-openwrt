@@ -27,7 +27,8 @@ jobs:
           sudo apt-get update
           sudo apt-get -y --no-install-recommends install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
           curl https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh  | sed '/#/d' | sed 's/\\//g' | sed 's/exit 0//g' | sed 's/sudo apt -y install//g' | sed 's/sudo apt-get -y install//g' | sed 's/:i386//g' | xargs sudo apt-get -y --no-install-recommends install
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /usr/local/share/boost /opt/ghc
       - name: Install Repo
         run: |
           git clone https://github.com/friendlyarm/repo
@@ -43,7 +44,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           rm -rf kernel
-          git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/friendlyarm/kernel-rockchip kernel
+          git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/fanck0605/kernel-rockchip kernel
           cd kernel
           git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
           git fetch linux
