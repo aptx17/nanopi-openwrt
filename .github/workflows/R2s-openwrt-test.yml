@@ -49,7 +49,7 @@ jobs:
           git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
           git fetch linux
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git rebase linux/linux-5.4.y
+          git rebase linux/linux-5.4.3
           cd ../
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
@@ -115,5 +115,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-test-5.4.44
+          name: NanoPi R2S-test-5.4.43
           path: ./artifact/
