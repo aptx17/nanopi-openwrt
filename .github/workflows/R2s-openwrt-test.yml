@@ -49,7 +49,7 @@ jobs:
           git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
           git fetch linux
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git rebase linux/linux-5.4.43
+          git rebase linux/linux-5.4.y
           cd ../
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
