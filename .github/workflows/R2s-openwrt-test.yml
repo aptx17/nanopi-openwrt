@@ -43,14 +43,6 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          rm -rf kernel
-          git clone --single-branch -b nanopi-r2-v5.4.y https://github.com/fanck0605/kernel-rockchip kernel
-          cd kernel
-          git remote add linux https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-          git fetch linux
-          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git rebase linux/linux-5.4.y
-          cd ../
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
         run: |
@@ -74,7 +66,7 @@ jobs:
           rm -rf luci-theme-argon
           git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
           cd ../../
-          git apply ../../enable_autocore.diff
+          #git apply ../../enable_autocore.diff
           #git apply ../../fix_cpufreq.diff
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
@@ -82,8 +74,8 @@ jobs:
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
-          mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
-          mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
+          #mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
+          #mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
           echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
       - name: Build FriendlyWrt
         run: |
@@ -115,5 +107,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-test-5.4.45
+          name: NanoPi R2S-test-5.4.40
           path: ./artifact/
