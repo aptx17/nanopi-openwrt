@@ -57,7 +57,7 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
-          git rebase e31bc21b9514067cd0a305539ac0ef7e1bd94a13^ --onto upstream/master -X theirs
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
