@@ -56,17 +56,20 @@ jobs:
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3328/default-settings/install.sh
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git remote add upstream https://github.com/openwrt/openwrt.git && git fetch upstream
-          git branch v19073 v19.07.3
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto v19073 -X theirs
+          git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
+          git branch master
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto master -X theirs
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
-          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout v19073 -- feeds.conf.default
+          git checkout upstream/master -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
-          cd ..
+          cd package/lean/
+          rm -rf luci-theme-argon
+          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+          cd ../../
           #git apply ../../enable_autocore.diff
           #git apply ../../fix_cpufreq.diff
+          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
@@ -75,11 +78,6 @@ jobs:
           mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
           mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
           echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
-          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.3/feeds.conf.default
-      - name: Clean Feeds
-        run: |
-          cd friendlywrt-rk3328/friendlywrt
-          ./scripts/feeds clean -a
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
