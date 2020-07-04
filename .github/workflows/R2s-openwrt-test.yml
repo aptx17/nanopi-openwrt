@@ -54,6 +54,10 @@ jobs:
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
           cat ../base_rk3328.seed > configs/config_rk3328
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3328/default-settings/install.sh
+          echo '
+          # CONFIG_PACKAGE_kmod-shortcut-fe is not set
+          # CONFIG_PACKAGE_kmod-shortcut-fe-cm is not set
+          ' >> configs/config_rk3328
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
@@ -107,5 +111,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi R2S-test-5.4.40
+          name: NanoPi-R2S-kernel-5.4.40
           path: ./artifact/
