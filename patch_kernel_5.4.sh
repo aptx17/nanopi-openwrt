@@ -9,11 +9,11 @@ cd openwrt
 #git checkout 4e0c54bc5bc8381e031af5147b66b4dadeecc626
 #rm target/linux/generic/pending-5.4/403-mtd-hook-mtdsplit-to-Kbuild.patch
 #rm target/linux/generic/hack-5.4/700-swconfig_switch_drivers.patch
+rm target/linux/generic/pending-5.4/834-ledtrig-libata.patch
+cp -a ./target/linux/generic/files/* ../kernel/
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
-./scripts/patch-kernel.sh ../kernel target/linux/octeontx/patches-5.4
-cp -a ./target/linux/generic/files/* ../kernel/
 cd ../
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
