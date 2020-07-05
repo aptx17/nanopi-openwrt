@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - '.github/workflows/R2s-openwrt-test.yml'
+      - '.github/workflows/R2s-FriendlyWrt.yml'
 #  schedule:
  #   - cron: '10 01 * * *'
    
@@ -111,5 +111,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi-R2S-kernel-5.4.40
+          name: NanoPi-R2S-FriendlyWrt-kernel-5.4.40
           path: ./artifact/
