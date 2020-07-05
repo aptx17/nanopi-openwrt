@@ -6,14 +6,14 @@ git apply RK3328-enable-1512mhz-opp.patch
 cd ../
 git clone --single-branch https://github.com/openwrt/openwrt.git --depth=1
 cd openwrt
-#git checkout 4e0c54bc5bc8381e031af5147b66b4dadeecc626
+git checkout 6062d858929df927e244280ec4864b35a217d6d1
 #rm target/linux/generic/pending-5.4/403-mtd-hook-mtdsplit-to-Kbuild.patch
 #rm target/linux/generic/hack-5.4/700-swconfig_switch_drivers.patch
-rm target/linux/generic/pending-5.4/834-ledtrig-libata.patch
 cp -a ./target/linux/generic/files/* ../kernel/
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
+./scripts/patch-kernel.sh ../kernel target/linux/octeontx/patches-5.4
 cd ../
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
