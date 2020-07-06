@@ -1,4 +1,8 @@
 cd friendlywrt-rk3328
+cd friendlywrt
+mkdir package/network/config/firewall/patches
+wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
+cd ../
 cd kernel/
 wget -O net/netfilter/xt_FULLCONENAT.c https://raw.githubusercontent.com/Chion82/netfilter-full-cone-nat/master/xt_FULLCONENAT.c
 git apply ../../add_fullconenat.diff
