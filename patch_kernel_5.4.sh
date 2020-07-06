@@ -1,6 +1,5 @@
 cd friendlywrt-rk3328
-cd kernel/
-git apply ../../add_fullconenat.diff
+cd friendlywrt/
 mkdir package/network/config/firewall/patches
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
 pushd feeds/luci
@@ -9,6 +8,9 @@ popd
 pushd target/linux/generic/hack-5.4
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
 popd
+cd ../
+cd kernel/
+git apply ../../add_fullconenat.diff
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
 git apply RK3328-enable-1512mhz-opp.patch
 cd ../
