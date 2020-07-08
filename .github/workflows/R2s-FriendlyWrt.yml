@@ -81,13 +81,6 @@ jobs:
           mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
           mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
           echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
-      - name: Update fullcone
-        run: |
-          cd friendlywrt-rk3328
-          cd friendlywrt/
-          rm -rf package/network/config/firewall/patches/fullconenat.patch
-          wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch         
-          wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
