@@ -7,12 +7,13 @@ on:
     paths:
       - '.github/workflows/R2s-FriendlyWrt.yml'
 #  schedule:
- #   - cron: '10 01 * * *'
+ #   - cron: '10 11 * * *'
    
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.repository == 'aptx17/nanopi-openwrt'
+    
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -64,12 +65,12 @@ jobs:
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
-          sed -i '5s/#src-git/src-git/g' feeds.conf.default
-          #cd package/lean/
-          #rm -rf luci-theme-argon
-          #git clone https://github.com/jerrykuku/luci-theme-argon.git
-          #cd ../../
-          git apply ../../enable_autocore.diff
+          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          cd package/lean/
+          rm -rf luci-theme-argon
+          git clone https://github.com/jerrykuku/luci-theme-argon.git
+          cd ../../
+          #git apply ../../enable_autocore.diff
           #git apply ../../fix_cpufreq.diff
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
@@ -80,6 +81,13 @@ jobs:
           mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
           mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
           echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
+      - name: Update fullcone
+        run: |
+          cd friendlywrt-rk3328
+          cd friendlywrt/
+          mkdir package/network/config/firewall/patches
+          wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch         
+          wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
