@@ -7,13 +7,12 @@ on:
     paths:
       - '.github/workflows/R2s-FriendlyWrt.yml'
 #  schedule:
- #   - cron: '10 01 * * *'
+ #   - cron: '10 11 * * *'
    
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.repository == 'aptx17/nanopi-openwrt'
-    
+    if: github.repository == 'aptx17/nanopi-openwrt' 
     steps:
       - name: Checkout
         uses: actions/checkout@master
