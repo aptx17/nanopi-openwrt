@@ -28,6 +28,7 @@ CONFIG_OPENSSL_WITH_NPN=y
 CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_uhttpd=y
 CONFIG_PACKAGE_cgi-io=y
+CONFIG_PACKAGE_bc=y
 CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-theme-material=y
 CONFIG_PACKAGE_kmod-nls-base=y
