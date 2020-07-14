@@ -43,6 +43,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          mv ../scripts/defconfig kernel/arch/arm64/configs
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
