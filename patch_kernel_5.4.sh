@@ -2,7 +2,7 @@ cd friendlywrt-rk3328
 cd kernel/
 git apply ../../add_fullconenat.diff
 wget https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/999-unlock-1608mhz-rk3328.patch
-git apply RK3328-enable-1512mhz-opp.patch
+git apply 999-unlock-1608mhz-rk3328.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
 git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1
