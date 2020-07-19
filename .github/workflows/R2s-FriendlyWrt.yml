@@ -110,5 +110,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi-R2S-FriendlyWrt-kernel-5.4.40
+          name: NanoPi-R2S-FriendlyWrt-kernel-5.4.50
           path: ./artifact/
