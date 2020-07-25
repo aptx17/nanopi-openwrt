@@ -42,10 +42,10 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/config-4.14 friendlywrt/target/linux/rockchip-rk3328
+          #mv ../scripts/config-4.14 friendlywrt/target/linux/rockchip-rk3328
           mv ../scripts/defconfig kernel/arch/arm64/configs
-          rm -rf  kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
-          rm -rf  kernel/arch/arm64/configs/nanopi4_linux_defconfig
+          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
       - name: Patch Kernel
         run: |
