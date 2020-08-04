@@ -66,7 +66,7 @@ jobs:
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
-          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          sed -i '5s/#src-git/src-git/g' feeds.conf.default
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
@@ -85,7 +85,6 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          sed -i "/install -a/a\wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullcone_switch.patch | git apply" scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r2s.mk
       - name: Fix 1001
         run: |
