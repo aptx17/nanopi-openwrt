@@ -15,7 +15,7 @@ jobs:
     if: github.repository == 'aptx17/nanopi-openwrt' 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@master
         with:
           ref: master
       - name: Initialization Environment
@@ -42,8 +42,6 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/config-4.14 friendlywrt/target/linux/rockchip-rk3328
-          mv ../scripts/defconfig kernel/arch/arm64/configs
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
       - name: Patch Kernel
@@ -74,8 +72,8 @@ jobs:
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
           cd ../../
           #git apply ../../enable_autocore.diff
-          #git apply ../../fix_cpufreq.diff
-          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/edge"' package/lean/default-settings/files/zzz-default-settings
+          git apply ../../scripts/fullcone_switch.patch
+          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
@@ -112,7 +110,7 @@ jobs:
           cp friendlywrt-rk3328/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@master
         with:
           name: NanoPi-R2S-FriendlyWrt-kernel-5.4.50
           path: ./artifact/
