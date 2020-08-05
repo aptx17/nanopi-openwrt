@@ -67,7 +67,6 @@ jobs:
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
-          patch -p1 < ../../scripts/fullcone_switch.patch
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
