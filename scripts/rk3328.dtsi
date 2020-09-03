@@ -118,8 +118,8 @@
 			opp-microvolt = <1300000>;
 			clock-latency-ns = <40000>;
 		};
-		opp-1800000000 {
-			opp-hz = /bits/ 64 <1800000000>;
+		opp-1512000000 {
+			opp-hz = /bits/ 64 <1512000000>;
 			opp-microvolt = <1450000>;
 			clock-latency-ns = <40000>;
 		};
@@ -244,6 +244,17 @@
 			     &pdmm0_sdi1_sleep
 			     &pdmm0_sdi2_sleep
 			     &pdmm0_sdi3_sleep>;
+		status = "disabled";
+	};
+	
+	rng: rng@ff060000 {
+		compatible = "rockchip,cryptov1-rng";
+		reg = <0x0 0xff060000 0x0 0x4000>;
+
+ 		clocks = <&cru SCLK_CRYPTO>, <&cru HCLK_CRYPTO_SLV>;
+		clock-names = "clk_crypto", "hclk_crypto";
+		assigned-clocks = <&cru SCLK_CRYPTO>, <&cru HCLK_CRYPTO_SLV>;
+		assigned-clock-rates = <150000000>, <100000000>;
 		status = "disabled";
 	};
 
