@@ -5,7 +5,7 @@ git apply ../../add_fullconenat.diff
 #git apply 999-unlock-1608mhz-rk3328.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
-git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1
+git checkout 05b8e84362b8455dec6db9b862826f21e8f24341
 #rm target/linux/generic/pending-5.4/403-mtd-hook-mtdsplit-to-Kbuild.patch
 #rm target/linux/generic/hack-5.4/700-swconfig_switch_drivers.patch
 cp -a ./target/linux/generic/files/* ../kernel/
