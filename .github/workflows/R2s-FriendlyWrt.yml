@@ -65,7 +65,7 @@ jobs:
           rm -rf package/kernel/mt76/Makefile package/kernel/mwlwifi/Makefile package/network/services/hostapd package/kernel/mac80211 package/kernel/broadcom-wl package/kernel/acx-mac80211 package/kernel/rtl8812au-ct
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
+          git checkout upstream/lede-17.01 -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
           rm -rf ./feeds/packages/net/miniupnpd
           svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
