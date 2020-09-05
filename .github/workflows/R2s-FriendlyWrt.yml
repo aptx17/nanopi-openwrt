@@ -65,7 +65,7 @@ jobs:
           rm -rf package/kernel/mt76/Makefile package/kernel/mwlwifi/Makefile package/network/services/hostapd package/kernel/mac80211 package/kernel/broadcom-wl package/kernel/acx-mac80211 package/kernel/rtl8812au-ct
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
+          git checkout upstream/lede-17.01 -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
           rm -rf ./feeds/packages/net/miniupnpd
           svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
@@ -74,6 +74,7 @@ jobs:
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
           cd ../../
           #git apply ../../enable_autocore.diff
+          sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
