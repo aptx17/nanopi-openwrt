@@ -46,6 +46,9 @@ jobs:
           mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
           mv ../scripts/host.c kernel/drivers/usb/dwc3
+          cd friendlywrt
+          wget -P target/linux/rockchip-rk3328/base-files/etc/init.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
+          wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -61,8 +64,6 @@ jobs:
           # CONFIG_PACKAGE_kmod-shortcut-fe-cm is not set
           ' >> configs/config_rk3328
           cd friendlywrt
-          wget -P target/linux/rockchip-rk3328/base-files/etc/init.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
-          wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
