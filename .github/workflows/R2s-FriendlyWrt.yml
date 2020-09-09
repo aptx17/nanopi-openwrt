@@ -67,7 +67,7 @@ jobs:
           rm -rf package/kernel/mt76/Makefile package/kernel/mwlwifi/Makefile package/network/services/hostapd package/kernel/mac80211 package/kernel/broadcom-wl package/kernel/acx-mac80211 package/kernel/rtl8812au-ct
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
+          git checkout upstream/lede-17.01 -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
           rm -rf ./feeds/packages/net/miniupnpd
           svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
@@ -76,7 +76,7 @@ jobs:
           wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
           cd package/lean/
           rm -rf luci-theme-argon
-          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
+          git clone -b 18.06 --single-branch https://github.com/garypang13/luci-theme-edge.git
           cd ../../
           #git apply ../../enable_autocore.diff
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
@@ -86,8 +86,6 @@ jobs:
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
-          #mv ../../scripts/checkwan.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/checkwan.sh &' package/base-files/files/etc/rc.local
-          #mv ../../scripts/check_wan4.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/check_wan4.sh &' package/base-files/files/etc/rc.local
           echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
       - name: Build FriendlyWrt
         run: |
