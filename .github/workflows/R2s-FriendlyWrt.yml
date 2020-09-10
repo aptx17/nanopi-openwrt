@@ -42,6 +42,7 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
+          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
           mv ../scripts/host.c kernel/drivers/usb/dwc3
@@ -59,6 +60,7 @@ jobs:
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
+          rm -rf package/kernel/mt76/Makefile package/kernel/mwlwifi/Makefile package/network/services/hostapd package/kernel/mac80211 package/kernel/broadcom-wl package/kernel/acx-mac80211 package/kernel/rtl8812au-ct
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/lede-17.01 -- feeds.conf.default
