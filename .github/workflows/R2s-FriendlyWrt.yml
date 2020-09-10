@@ -42,7 +42,6 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
           mv ../scripts/host.c kernel/drivers/usb/dwc3
