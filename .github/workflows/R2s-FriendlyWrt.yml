@@ -56,10 +56,6 @@ jobs:
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
           cat ../base_rk3328.seed > configs/config_rk3328
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3328/default-settings/install.sh
-          echo '
-          # CONFIG_PACKAGE_kmod-shortcut-fe is not set
-          # CONFIG_PACKAGE_kmod-shortcut-fe-cm is not set
-          ' >> configs/config_rk3328
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
@@ -78,7 +74,6 @@ jobs:
           rm -rf luci-theme-argon
           git clone -b 18.06 --single-branch https://github.com/garypang13/luci-theme-edge.git
           cd ../../
-          #git apply ../../enable_autocore.diff
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
