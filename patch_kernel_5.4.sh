@@ -13,8 +13,8 @@ cp -a ./target/linux/generic/files/* ../kernel/
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/octeontx/patches-5.4
-mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
 cd ../
+mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
 ./merge_config.sh -m .config.override kernel/arch/arm64/configs/nanopi-r2_linux_defconfig && mv .config kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
