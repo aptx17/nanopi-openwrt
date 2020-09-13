@@ -77,7 +77,7 @@ jobs:
           wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
           cd package/lean/
           rm -rf luci-theme-argon
-          git clone -b 18.06 --single-branch https://github.com/garypang13/luci-theme-edge.git
+          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
           cd ../../
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
