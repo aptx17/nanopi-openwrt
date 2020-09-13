@@ -49,6 +49,11 @@ jobs:
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
+      - name: ACL for luci-19.07
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/acl.sh
+          /bin/bash acl.sh -a
       - name: Mods
         run: |
           cd friendlywrt-rk3328
@@ -63,7 +68,7 @@ jobs:
           rm -rf package/kernel/mt76/Makefile package/kernel/mwlwifi/Makefile package/network/services/hostapd package/kernel/mac80211 package/kernel/broadcom-wl package/kernel/acx-mac80211 package/kernel/rtl8812au-ct
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/lede-17.01 -- feeds.conf.default
+          git checkout upstream/master -- feeds.conf.default
           sed -i '5s/#src-git/src-git/g' feeds.conf.default
           rm -rf ./feeds/packages/net/miniupnpd
           svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
