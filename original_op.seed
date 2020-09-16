@@ -71,10 +71,11 @@ CONFIG_PACKAGE_luci-mod-system=y
 CONFIG_PACKAGE_luci-proto-ipv6=y
 CONFIG_PACKAGE_luci-proto-ppp=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
-CONFIG_PACKAGE_luci-theme-material=y
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-theme-edge=y
-CONFIG_PACKAGE_luci-app-sfe=y
+CONFIG_PACKAGE_luci-app-turboacc=y
+CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_shortcut-fe=y
+CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_bbr-cca=y
 CONFIG_PACKAGE_kmod-fast-classifier=y
 CONFIG_PACKAGE_kmod-shortcut-fe=y
 CONFIG_PACKAGE_rpcd=y
@@ -91,18 +92,60 @@ CONFIG_DEVEL=y
 # CONFIG_PACKAGE_ddns-scripts_dnspod is not set
 # CONFIG_PACKAGE_dnsmasq is not set
 # CONFIG_PACKAGE_luci-app-adguardhome is not set
-# CONFIG_PACKAGE_luci-app-ddns is not set
 # CONFIG_PACKAGE_luci-app-serverchan is not set
 # CONFIG_PACKAGE_luci-app-smartdns is not set
 # CONFIG_PACKAGE_luci-app-sqm is not set
 # CONFIG_PACKAGE_luci-app-unblockneteasemusic is not set
 # CONFIG_PACKAGE_luci-app-usb-printer is not set
+# CONFIG_PACKAGE_nlbwmon is not set
 # CONFIG_PACKAGE_luci-app-nlbwmon is not set
 # CONFIG_PACKAGE_luci-app-oaf is not set
 # CONFIG_PACKAGE_luci-app-openclash is not set
 # CONFIG_PACKAGE_luci-app-wol is not set
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set
+# CONFIG_PACKAGE_luci-app-accesscontrol is not set
+# CONFIG_PACKAGE_luci-app-adbyby-plus is not set
+# CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary is not set
+# CONFIG_PACKAGE_luci-app-arpbind is not set
+# CONFIG_PACKAGE_luci-app-autoreboot is not set
+# CONFIG_PACKAGE_luci-app-ddns is not set
+# CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs is not set
+# CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk is not set
+# CONFIG_PACKAGE_luci-app-filetransfer is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Server is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Server is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_GO is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_haproxy is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_https_dns_proxy is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_v2ray-plugin is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_simple-obfs is not set
+# CONFIG_PACKAGE_luci-app-ramfree is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_fuse-utils is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2 is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server is not set
+# CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_flow-offload is not set
+# CONFIG_PACKAGE_luci-app-unblockmusic is not set
+# CONFIG_UnblockNeteaseMusic_Go is not set
+# CONFIG_UnblockNeteaseMusic_NodeJS is not set
+# CONFIG_PACKAGE_luci-app-vlmcsd is not set
+# CONFIG_PACKAGE_luci-app-vsftpd is not set
+# CONFIG_PACKAGE_luci-app-vssr_INCLUDE_V2ray_plugin is not set
+# CONFIG_PACKAGE_luci-app-vssr_INCLUDE_V2ray is not set
+# CONFIG_PACKAGE_luci-app-vssr_INCLUDE_Trojan is not set
+# CONFIG_PACKAGE_luci-app-vssr_INCLUDE_ShadowsocksR_Server is not set
+# CONFIG_PACKAGE_luci-app-zerotier is not set
 # CONFIG_POSTFIX_TLS is not set
 # CONFIG_POSTFIX_SASL is not set
 # CONFIG_POSTFIX_LDAP is not set
