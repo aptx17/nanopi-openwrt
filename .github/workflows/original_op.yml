@@ -39,7 +39,7 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cp openwrt/bin/targets/rockchip/armv8/*squashfs*img.gz ./artifact/
+          mv openwrt/bin/targets/rockchip/armv8/*squashfs*img.gz ./artifact/
           cd openwrt
           cp .config ./artifact/
           cd ..
