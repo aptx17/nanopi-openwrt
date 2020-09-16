@@ -39,10 +39,8 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv openwrt/bin/targets/rockchip/armv8/*squashfs*img.gz ./artifact/
-          cd openwrt
-          cp .config ./artifact/
-          cd ..
+          mv openwrt/bin/targets/*/*/*squashfs*img.gz ./artifact.img.gz
+          cp openwrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Firmwares
         uses: actions/upload-artifact@master
