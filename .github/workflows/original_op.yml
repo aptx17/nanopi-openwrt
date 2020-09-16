@@ -27,7 +27,7 @@ jobs:
       - name: Setup Configuration
         run: |
           cd openwrt
-          cat ../original_op.seed >> .config
+          mv ../original_op.seed .config
       - name: Compile
         run: |
           cd openwrt
@@ -37,11 +37,14 @@ jobs:
           make -j$(($(nproc) + 1)) -s
       - name: Assemble Artifact
         run: |
-          mv openwrt/bin/targets/*/*/*squashfs*img.gz ./artifact.img.gz
-          zip -r artifact.zip ./artifact.img.gz
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          mv openwrt/bin/targets/*/*/*squashfs*img.gz ./artifact/
+          cp openwrt/.config ./artifact/
+          zip -r artifact.zip ./artifact/
       - name: Upload Firmwares
         uses: actions/upload-artifact@master
         with:
           name: r2s-original-openwrt
-          path: ./artifact.zip
+          path: ./artifact/
         
