@@ -37,14 +37,11 @@ jobs:
           make -j$(($(nproc) + 1)) -s
       - name: Assemble Artifact
         run: |
-          rm -rf ./artifact/
-          mkdir -p ./artifact/
           mv openwrt/bin/targets/*/*/*squashfs*img.gz ./artifact.img.gz
-          cp openwrt/.config ./artifact/
-          zip -r artifact.zip ./artifact/
+          zip -r artifact.zip ./artifact.img.gz
       - name: Upload Firmwares
         uses: actions/upload-artifact@master
         with:
           name: r2s-original-openwrt
-          path: ./artifact/
+          path: ./artifact.zip
         
