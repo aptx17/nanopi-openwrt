@@ -1,0 +1,52 @@
+name: r2s-original
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/original_op.yml'
+#  schedule:
+#  - cron: '10 00 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.repository == 'aptx17/nanopi-openwrt'
+    steps:   
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: . 1_initialization_environment.sh
+      - name: Clone Source
+        run: |
+          git clone https://github.com/project-openwrt/openwrt --depth=1 -b openwrt-18.06-k5.4
+      - name: Setup Configuration
+        run: |
+          cd openwrt
+          cat ../original_op.seed >> .config
+      - name: Compile
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a && ./scripts/feeds install -a
+          make defconfig
+          make download -j8
+          make -j$(($(nproc) + 1)) -s
+      - name: Assemble Artifact
+        run: |
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          cp openwrt/bin/targets/rockchip/armv8/*squashfs*img.gz ./artifact/
+          cd openwrt
+          cp .config ./artifact/
+          cd ..
+          zip -r artifact.zip ./artifact/
+      - name: Upload Firmwares
+        uses: actions/upload-artifact@master
+        with:
+          name: r2s-original-openwrt
+          path: ./artifact/
+        
