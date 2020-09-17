@@ -23,7 +23,7 @@ jobs:
         run: . 1_initialization_environment.sh
       - name: Clone Source
         run: |
-          git clone https://github.com/project-openwrt/openwrt --depth=1 -b openwrt-18.06-k5.4
+          git clone https://github.com/project-openwrt/openwrt --depth=1 -b master
       - name: Setup Configuration
         run: |
           cd openwrt
