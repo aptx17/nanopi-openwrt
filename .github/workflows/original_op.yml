@@ -28,6 +28,7 @@ jobs:
         run: |
           cd openwrt
           mv ../original_op.seed .config
+          sed -i '/PREEMPT/d' target/linux/rockchip/armv8/config-5.4
       - name: Compile
         run: |
           cd openwrt
