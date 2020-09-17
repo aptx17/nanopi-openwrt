@@ -34,6 +34,8 @@ jobs:
         run: |
           cd openwrt
           ./scripts/feeds update -a && ./scripts/feeds install -a
+          rm -rf ./feeds/packages/net/miniupnpd
+          svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
           make defconfig
           make download -j8
           make -j$(($(nproc) + 1)) -s
