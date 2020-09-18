@@ -1,8 +1,8 @@
 cd friendlywrt-rk3328
 cd kernel/
 git apply ../../add_fullconenat.diff
-wget https://raw.githubusercontent.com/project-openwrt/openwrt/openwrt-18.06-k5.4/target/linux/rockchip/patches-5.4/002-rockchip-add-hwmon-support-for-SoCs-and-GPUs.patch
-git apply 002-rockchip-add-hwmon-support-for-SoCs-and-GPUs.patch
+wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/hwmon.patch
+git apply hwmon.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
 git checkout 05b8e84362b8455dec6db9b862826f21e8f24341
