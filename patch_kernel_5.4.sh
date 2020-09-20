@@ -1,8 +1,8 @@
 cd friendlywrt-rk3328
 cd kernel/
 git apply ../../add_fullconenat.diff
-wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/hwmon.patch
-git apply hwmon.patch
+wget wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
+git apply RK3328-enable-1512mhz-opp.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
 git checkout 05b8e84362b8455dec6db9b862826f21e8f24341
