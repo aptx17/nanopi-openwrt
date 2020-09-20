@@ -43,9 +43,9 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
-          mv ../scripts/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
-          mv ../scripts/host.c kernel/drivers/usb/dwc3
+          #mv ../scripts/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
+          #mv ../scripts/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
+          #mv ../scripts/host.c kernel/drivers/usb/dwc3
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -66,9 +66,6 @@ jobs:
           sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           rm -rf ./feeds/packages/net/miniupnpd
           svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
-          wget -P target/linux/rockchip-rk3328/base-files/etc/init.d https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fa-rk3328-misc
-          chmod 755 target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
-          wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
