@@ -33,8 +33,7 @@ jobs:
       - name: Compile
         run: |
           cd openwrt
-          wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/include/scons.mk
-          sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
+          patch -p1 < ../scripts/RK3328.patch
           ./scripts/feeds update -a && ./scripts/feeds install -a
           make defconfig
           make download -j8
