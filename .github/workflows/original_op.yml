@@ -28,12 +28,13 @@ jobs:
         run: |
           cd openwrt
           mv ../original_op.seed .config
+          mv ../scripts/003-arm64-dts-rockchip-add-more-cpu-operating-points-for.patch target/linux/rockchip/patches-5.4
+          mv ../scripts/r8152.patch target/linux/rockchip/patches-5.4
           sed -i '/PREEMPT/d' target/linux/rockchip/armv8/config-5.4
           sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
       - name: Compile
         run: |
           cd openwrt
-          patch -p1 < ../scripts/RK3328.patch
           ./scripts/feeds update -a && ./scripts/feeds install -a
           make defconfig
           make download -j8
