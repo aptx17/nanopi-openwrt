@@ -42,7 +42,9 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs      
+          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          mv ../scripts/back/r8152.c kernel/drivers/net/usb	
+          mv ../scripts/back/dwc3.txt kernel/Documentation/devicetree/bindings/usb      
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
