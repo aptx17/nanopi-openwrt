@@ -7,7 +7,7 @@ wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/hwmo
 git apply hwmon.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
-git checkout 05b8e84362b8455dec6db9b862826f21e8f24341
+git checkout a47279154e08d54df05fa8bf45fe935ebf0df5da
 #rm target/linux/generic/pending-5.4/403-mtd-hook-mtdsplit-to-Kbuild.patch
 #rm target/linux/generic/hack-5.4/700-swconfig_switch_drivers.patch
 cp -a ./target/linux/generic/files/* ../kernel/
