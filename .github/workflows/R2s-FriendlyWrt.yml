@@ -42,18 +42,7 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
-          mv ../scripts/back/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
-          mv ../scripts/back/host.c kernel/drivers/usb/dwc3
-          mv ../scripts/back/r8152.c kernel/drivers/net/usb
-          mv ../scripts/back/dwc3.txt kernel/Documentation/devicetree/bindings/usb
-          mv ../scripts/back/core.c kernel/drivers/usb/dwc3
-          mv ../scripts/back/core.h kernel/drivers/usb/dwc3
-          mv ../scripts/back/xhci.h kernel/drivers/usb/host
-          mv ../scripts/back/xhci-plat.c kernel/drivers/usb/host
-          mv ../scripts/back/xhci-ring.c kernel/drivers/usb/host
-          mv ../scripts/back/rk3328-nanopi-r2-common.dtsi kernel/arch/arm64/boot/dts/rockchip        
+          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs      
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -115,5 +104,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi-R2S-FriendlyWrt-kernel-5.4.61
+          name: NanoPi-R2S-FriendlyWrt-kernel-5.4.75
           path: ./artifact/
