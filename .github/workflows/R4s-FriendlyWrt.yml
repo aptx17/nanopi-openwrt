@@ -41,10 +41,10 @@ jobs:
           cd friendlywrt/ && git fetch --unshallow
       - name: Update kernel
         run: |
-          cd friendlywrt-rk3399
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip  
+          #cd friendlywrt-rk3399
+          #mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          #mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
+          #mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip  
       - name: Patch Kernel
         run: |
           . patch_rk3399_kernel_5.4.sh
