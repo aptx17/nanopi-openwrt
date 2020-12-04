@@ -14,13 +14,14 @@ jobs:
   build:
 
     runs-on: ubuntu-18.04
+    if: github.repository == 'aptx17/nanopi-openwrt' 
 
     steps:
 
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@master
         with:
-          ref: main
+          ref: master
 
       - name: Initialize Environment
         env:
