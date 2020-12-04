@@ -89,13 +89,15 @@ jobs:
         run: |
           cd code
           #mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          #mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
+          mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
           
       - name: Patch Kernel
         run: |
           cd code/kernel/
           git apply ../../add_fullconenat.diff
+          cd ../
+          cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
 
       - name: Custom Configure Files
         run: |
