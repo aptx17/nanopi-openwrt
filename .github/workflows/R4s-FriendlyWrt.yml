@@ -61,7 +61,7 @@ jobs:
           git rebase 2dafc2d23230582638c43bca837d987d6175b1fd^ --onto upstream/lede-17.01 -X theirs
           rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
+          git checkout upstream/master-v19.07.4 -- feeds.conf.default
           sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
           ./scripts/feeds update -a && ./scripts/feeds install -a
