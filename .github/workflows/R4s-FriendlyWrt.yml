@@ -58,18 +58,16 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git checkout upstream/lede-17.01 -b tmp
-          git rm README.md
-          git commit -m 'reset'
-          git checkout master-v19.07.1
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
-          rm -f target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
-          git checkout upstream/lede-17.01 -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          git rebase 2dafc2d23230582638c43bca837d987d6175b1fd^ --onto upstream/lede-17.01 -X theirs
+          rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          git checkout upstream/master -- feeds.conf.default
+          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
           ./scripts/feeds update -a && ./scripts/feeds install -a
           rm -rf feeds/packages/libs/libcap/ && svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
           rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
-          sed -i '/enable-jsonc/i\\t--disable-cloud \\' feeds/packages/admin/netdata/Makefile 
+          wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
@@ -78,6 +76,8 @@ jobs:
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
+          sed -i 's/Os/O3/g' include/target.mk
+          sed -i 's/O2/O3/g' ./rules.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
       - name: Build FriendlyWrt
         run: |
