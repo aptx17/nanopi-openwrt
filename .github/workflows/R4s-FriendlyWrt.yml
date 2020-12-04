@@ -55,19 +55,16 @@ jobs:
           cat configs/config_rk3399 | grep "TARGET" >> ../base_rk3399.seed
           cat ../base_rk3399.seed > configs/config_rk3399
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
+          git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git rebase 2dafc2d23230582638c43bca837d987d6175b1fd^ --onto upstream/lede-17.01 -X theirs
-          rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
-          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master-v19.07.4 -- feeds.conf.default
-          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
-          curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
-          ./scripts/feeds update -a && ./scripts/feeds install -a
-          rm -rf feeds/packages/libs/libcap/ && svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
-          rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
+          cp -r ../lede/package/lean package/
+          cp -r ../lede/package/libs/pcre package/libs/
+          sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
+          sed -i 's/^src-git packages.*/src-git packages https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
