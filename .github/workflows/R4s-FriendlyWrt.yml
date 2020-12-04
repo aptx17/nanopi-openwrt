@@ -57,11 +57,12 @@ jobs:
           cat ../base_rk3399.seed > configs/config_rk3399
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
           cd friendlywrt
+          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git checkout upstream/lede-17.01 -b tmp
           git rm README.md
           git commit -m 'reset'
-          git checkout master-v19.07.1
+          git checkout master-v19.07.4
           git rebase 2dafc2d23230582638c43bca837d987d6175b1fd^ --onto upstream/lede-17.01 -X theirs
           rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           git checkout upstream/lede-17.01 -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
