@@ -38,7 +38,7 @@ jobs:
           rm -rf friendlywrt-rk3399
           mkdir friendlywrt-rk3399
           cd friendlywrt-rk3399
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.4 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
+          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.4 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
           repo sync -c --no-tags --no-clone-bundle -j8
       - name: Merge LEDE
         run: |
@@ -46,6 +46,9 @@ jobs:
           git clone https://github.com/coolsnowwolf/openwrt
           cd friendlywrt
           cp -r ../openwrt/package/lean package/
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/pcre package/libs/
+          rm -rf package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
           sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
           sed -i 's/^src-git packages.*/src-git packages https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
