@@ -54,7 +54,6 @@ jobs:
           git clone https://github.com/coolsnowwolf/openwrt
           cd friendlywrt
           cp -r ../openwrt/package/lean package/
-          cp -r ../openwrt/package/libs/pcre package/libs/
           rm -f ./feeds.conf.default
           wget https://raw.githubusercontent.com/coolsnowwolf/openwrt/lede-17.01/feeds.conf.default
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
