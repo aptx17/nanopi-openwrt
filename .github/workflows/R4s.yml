@@ -43,11 +43,10 @@ jobs:
       - name: Merge LEDE
         run: |
           cd friendlywrt-rk3399
-          git clone https://github.com/coolsnowwolf/openwrt
+          git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
-          cp -r ../openwrt/package/lean package/        
-          rm -rf package/libs/openssl
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
+          cp -r ../lede/package/lean package/
+          cp -r ../lede/package/libs/pcre package/libs/
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
         run: |
