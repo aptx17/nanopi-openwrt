@@ -47,6 +47,8 @@ jobs:
           cd friendlywrt
           cp -r ../lede/package/lean package/
           cp -r ../lede/package/libs/pcre package/libs/
+          rm -rf package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
           sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
