@@ -53,7 +53,7 @@ jobs:
           cd friendlywrt
           cp -r ../openwrt/package/lean package/
           sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
-          sed -i 's/^src-git packages.*/src-git packages               
+          sed -i 's/^src-git packages.*/src-git packages https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default                         
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
         run: |
