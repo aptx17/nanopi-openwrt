@@ -10,14 +10,19 @@ on:
  #   - cron: '10 01 * * *'
 
 jobs:
+
   build:
+
     runs-on: ubuntu-18.04
     if: github.repository == 'aptx17/nanopi-openwrt' 
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@master
         with:
           ref: master
+
       - name: Initialize Environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -28,69 +33,74 @@ jobs:
           sudo apt-get -y install upx-ucl unzip
           sudo apt-get -y purge dotnet* ghc* google* llvm* mysql* php* zulu* firefox hhvm
           sudo apt-get -y autoremove --purge          
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash  
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+  
       - name: Install Repo
         run: |
           git clone https://github.com/friendlyarm/repo
           sudo cp repo/repo /usr/bin/
       - name: Download Source
         run: |
-          rm -rf friendlywrt-rk3399
-          mkdir friendlywrt-rk3399
-          cd friendlywrt-rk3399
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.4 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
-          repo sync -c --no-tags --no-clone-bundle -j8
+          rm -rf code
+          mkdir code
+          cd code
+          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.4 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+          repo sync -c --no-clone-bundle -j8
       - name: Merge LEDE
         run: |
-          cd friendlywrt-rk3399
-          git clone https://github.com/coolsnowwolf/openwrt
+          cd code
+          git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
-          cp -r ../openwrt/package/lean package/
+          cp -r ../lede/package/lean package/
+          cp -r ../lede/package/libs/pcre package/libs/
           sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
           sed -i 's/^src-git packages.*/src-git packages https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
         run: |
-          cd friendlywrt-rk3399/friendlywrt/package
+          cd code/friendlywrt/package
           rm -rf lean/luci-theme-argon
-          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge          
+          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
+          
       - name: Update Target.mk
         run: |
-          cd friendlywrt-rk3399/friendlywrt/include
+          cd code/friendlywrt/include
           sed -i 's/dnsmasq /dnsmasq-full default-settings luci /' target.mk
       - name: Update Feeds		
         run: |		
-          cd friendlywrt-rk3399/friendlywrt		
+          cd code/friendlywrt		
           ./scripts/feeds update -a		
           ./scripts/feeds install -a
       - name: Install Mods
         run: |
-          cd friendlywrt-rk3399
+          cd code
           sed -i '/STAMP_BUILT/d' friendlywrt/feeds/packages/utils/runc/Makefile
           sed -i '/STAMP_BUILT/d' friendlywrt/feeds/packages/utils/containerd/Makefile
           sed -i "/redirect_https/d" friendlywrt/package/network/services/uhttpd/files/uhttpd.config
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
       - name: Update kernel
         run: |
-          cd friendlywrt-rk3399
+          cd code
+          #mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip          
+          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
+          
       - name: Patch Kernel
         run: |
-          cd friendlywrt-rk3399/kernel/
+          cd code/kernel/
           git apply ../../add_fullconenat.diff
           cd ../
           cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
       - name: Custom Configure Files
         run: |
-          cd friendlywrt-rk3399
+          cd code
           . ../remove_unused_rk3399_config.sh
           cat configs/config_rk3399 | grep "TARGET" >> ../base_rk3399.seed
-          cat ../base_rk3399.seed > configs/config_rk3399                   
+          cat ../base_rk3399.seed > configs/config_rk3399
+                   
       - name: Set Default Values
         run: |
-          cd friendlywrt-rk3399/friendlywrt
-          wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          cd code/friendlywrt
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase=/luci-static/bootstrap' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
@@ -99,12 +109,12 @@ jobs:
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
       - name: Build OpenWrt
         run: |
-          cd friendlywrt-rk3399
+          cd code
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r4s.mk
       - name: Fix Rootfs Owner and Group
         run: |
-          lodev=$(sudo losetup -P -f --show friendlywrt-rk3399/out/*.img)
+          lodev=$(sudo losetup -P -f --show code/out/*.img)
           sudo rm -rf /mnt/friendlywrt-tmp
           sudo mkdir -p /mnt/friendlywrt-tmp
           sudo mount "$lodev""p8" /mnt/friendlywrt-tmp
@@ -115,8 +125,8 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          find friendlywrt-rk3399/out/ -name "FriendlyWrt_*img*" | xargs -I{} sh -c 'f=$(basename $1); zip -r -j "./artifact/${f}.zip" $1' sh {} \;
-          cp friendlywrt-rk3399/friendlywrt/.config ./artifact/
+          find code/out/ -name "FriendlyWrt_*img*" | xargs -I{} sh -c 'f=$(basename $1); zip -r -j "./artifact/${f}.zip" $1' sh {} \;
+          cp code/friendlywrt/.config ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
