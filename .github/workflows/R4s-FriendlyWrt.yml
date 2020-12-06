@@ -43,10 +43,9 @@ jobs:
           cd friendlywrt/ && git fetch --unshallow
       - name: Update kernel
         run: |
-          #cd friendlywrt-rk3399
-          #mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          #mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
-          #mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip  
+          cd friendlywrt-rk3399          
+          mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
+          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip  
       - name: Patch Kernel
         run: |
           . patch_rk3399_kernel_5.4.sh
@@ -60,17 +59,12 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git checkout upstream/lede-17.01 -b tmp
-          git rm README.md
-          git commit -m 'reset'
-          git checkout master-v19.07.1
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
-          rm -f target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
-          git checkout upstream/lede-17.01 -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
-          curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
-          ./scripts/feeds update -a && ./scripts/feeds install -a
-          rm -rf feeds/packages/libs/libcap/ && svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
-          rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
+          rm target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          git checkout upstream/lede-17.01 -- feeds.conf.default
+          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
