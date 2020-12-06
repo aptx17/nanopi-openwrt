@@ -76,14 +76,6 @@ jobs:
           cd friendlywrt-rk3399
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
-          mv ../scripts/back/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
-          mv ../scripts/back/host.c kernel/drivers/usb/dwc3
-          mv ../scripts/back/dwc3.txt kernel/Documentation/devicetree/bindings/usb
-          mv ../scripts/back/core.c kernel/drivers/usb/dwc3
-          mv ../scripts/back/core.h kernel/drivers/usb/dwc3
-          mv ../scripts/back/xhci.h kernel/drivers/usb/host
-          mv ../scripts/back/xhci-plat.c kernel/drivers/usb/host
-          mv ../scripts/back/xhci-ring.c kernel/drivers/usb/host          
       - name: Patch Kernel
         run: |
           cd friendlywrt-rk3399/kernel/
