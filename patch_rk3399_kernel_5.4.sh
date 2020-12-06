@@ -15,3 +15,5 @@ cd ../
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
 ./merge_config.sh -m .config.override kernel/arch/arm64/configs/nanopi4_linux_defconfig && mv .config kernel/arch/arm64/configs/nanopi4_linux_defconfig
+
+cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
