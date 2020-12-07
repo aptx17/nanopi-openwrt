@@ -48,14 +48,12 @@ jobs:
           repo sync -c --no-clone-bundle -j8
       - name: Merge LEDE
         run: |
-          cd code
-          git clone https://github.com/coolsnowwolf/lede
-          cd friendlywrt
-          cp -r ../lede/package/lean package/
-          cp -r ../lede/package/libs/pcre package/libs/
-          rm -rf package/libs/openssl
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl       
-          echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
+          cd code/friendlywrt
+          git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
+          rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          git checkout upstream/master -- feeds.conf.default
       - name: Install Extra Packages
         run: |
           cd code/friendlywrt/package
