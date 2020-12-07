@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/R4s.yml'
 #  schedule:
- #   - cron: '10 00 * * *'
+ #   - cron: '10 01 * * *'
 
 jobs:
 
@@ -49,18 +49,16 @@ jobs:
       - name: Merge LEDE
         run: |
           cd code
-          git clone https://github.com/coolsnowwolf/openwrt
+          git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
-          cp -r ../openwrt/package/lean package/
-          sed -i 's/^src-git luci.*/src-git luci https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
-          sed -i 's/^src-git packages.*/src-git packages https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default                         
+          cp -r ../lede/package/lean package/
+          cp -r ../lede/package/libs/pcre package/libs/        
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
         run: |
           cd code/friendlywrt/package
           rm -rf lean/luci-theme-argon
-          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
-          
+          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge          
       - name: Update Target.mk
         run: |
           cd code/friendlywrt/include
@@ -79,33 +77,38 @@ jobs:
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
       - name: Update kernel
         run: |
-          cd code
-          #mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          cd code          
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
-          
+          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip          
       - name: Patch Kernel
         run: |
           cd code/kernel/
           git apply ../../add_fullconenat.diff
           cd ../
           cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
+          cd friendlywrt
+          pushd target/linux/generic/hack-5.4
+          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          popd
+          wget https://github.com/QiuSimons/R2S-OpenWrt/blob/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+          git apply luci-app-firewall_add_sfe_switch.patch
+          pushd target/linux/generic/hack-5.4
+          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+          popd          
       - name: Custom Configure Files
         run: |
           cd code
           . ../remove_unused_rk3399_config.sh
           cat configs/config_rk3399 | grep "TARGET" >> ../base_rk3399.seed
-          cat ../base_rk3399.seed > configs/config_rk3399
-                   
+          cat ../base_rk3399.seed > configs/config_rk3399                   
       - name: Set Default Values
         run: |
           cd code/friendlywrt
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase=/luci-static/bootstrap' package/lean/default-settings/files/zzz-default-settings
-          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
-          sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config          
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
-          sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
+          sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile          
       - name: Build OpenWrt
         run: |
           cd code
