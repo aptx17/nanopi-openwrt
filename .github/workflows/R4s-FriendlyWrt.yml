@@ -58,7 +58,7 @@ jobs:
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
           cd friendlywrt
           rm -rf target/linux/ramips/dts
-          svn co https://github.com/friendlyarm/friendlywrt/trunk/master-v19.07.1/target/linux/ramips/dts target/linux/ramips/dts
+          svn co https://github.com/friendlyarm/friendlywrt/trunk/target/linux/ramips/dts target/linux/ramips/dts
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs          
