@@ -49,6 +49,7 @@ jobs:
       - name: Merge LEDE
         run: |
           cd code/friendlywrt
+          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
           rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
@@ -82,13 +83,7 @@ jobs:
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip          
       - name: Patch Kernel
         run: |
-          cd code/kernel/
-          git apply ../../add_fullconenat.diff
-          cd ../
-          cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
-          cd friendlywrt
-          rm -rf target/linux/generic/hack-4.14/
-          svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/hack-4.14 target/linux/generic/hack-4.14                
+          . patch_rk3399_kernel_5.4.sh                
       - name: Custom Configure Files
         run: |
           cd code
