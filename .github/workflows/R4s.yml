@@ -52,7 +52,9 @@ jobs:
           git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
           cp -r ../lede/package/lean package/
-          cp -r ../lede/package/libs/pcre package/libs/        
+          cp -r ../lede/package/libs/pcre package/libs/
+          rm -rf package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl       
           echo 'src-git node https://github.com/nxhack/openwrt-node-packages.git' >> feeds.conf.default
       - name: Install Extra Packages
         run: |
@@ -88,8 +90,7 @@ jobs:
           cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
           cd friendlywrt
           rm -rf target/linux/generic/hack-4.14/
-          svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/hack-4.14 target/linux/generic/hack-4.14
-          patch -p1 < ../../scripts/sfe_switch.patch         
+          svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/hack-4.14 target/linux/generic/hack-4.14                
       - name: Custom Configure Files
         run: |
           cd code
