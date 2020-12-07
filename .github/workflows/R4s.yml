@@ -84,17 +84,15 @@ jobs:
         run: |
           cd code/kernel/
           git apply ../../add_fullconenat.diff
+          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          git apply 953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+          git apply 952-net-conntrack-events-support-multiple-registrant.patch
           cd ../
           cat ../scripts/kernel.seed >> kernel/arch/arm64/configs/nanopi4_linux_defconfig
           cd friendlywrt
-          pushd target/linux/generic/hack-5.4
-          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
-          popd
-          wget https://github.com/QiuSimons/R2S-OpenWrt/blob/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
-          git apply luci-app-firewall_add_sfe_switch.patch
-          pushd target/linux/generic/hack-5.4
-          wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
-          popd          
+          wget https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+          git apply luci-app-firewall_add_sfe_switch.patch         
       - name: Custom Configure Files
         run: |
           cd code
