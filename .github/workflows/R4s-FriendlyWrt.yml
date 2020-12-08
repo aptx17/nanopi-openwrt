@@ -86,17 +86,7 @@ jobs:
         run: |
           cd code
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          ./build.sh nanopi_r4s.mk
-      - name: Fix 1001
-        run: |
-          run: |
-          lodev=$(sudo losetup -P -f --show code/out/*.img)
-          sudo rm -rf /mnt/friendlywrt-tmp
-          sudo mkdir -p /mnt/friendlywrt-tmp
-          sudo mount "$lodev""p8" /mnt/friendlywrt-tmp
-          sudo chown -R root:root /mnt/friendlywrt-tmp
-          sudo umount /mnt/friendlywrt-tmp
-          sudo losetup -d $lodev
+          ./build.sh nanopi_r4s.mk      
       - name: Zip Files
         run: |
           gzip code/out/*.img
