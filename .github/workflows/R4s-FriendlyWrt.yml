@@ -71,6 +71,8 @@ jobs:
           rm -rf feeds/packages/libs/libcap/ && svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
           rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          rm -rf package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
@@ -89,13 +91,11 @@ jobs:
           ./build.sh nanopi_r4s.mk
       - name: Fix 1001
         run: |          
-          lodev=$(sudo losetup -P -f --show code/out/*.img)
-          sudo rm -rf /mnt/friendlywrt-tmp
-          sudo mkdir -p /mnt/friendlywrt-tmp
-          sudo mount "$lodev""p8" /mnt/friendlywrt-tmp
-          sudo chown -R root:root /mnt/friendlywrt-tmp
-          sudo umount /mnt/friendlywrt-tmp
-          sudo losetup -d $lodev      
+          LOOP_DEVICE=$(losetup -f)
+          sudo losetup -o 100663296 ${LOOP_DEVICE} out/*.img
+          sudo rm -rf /mnt/friendlywrt-tmp && sudo mkdir -p /mnt/friendlywrt-tmp
+          sudo mount ${LOOP_DEVICE} /mnt/friendlywrt-tmp && sudo chown -R root:root /mnt/friendlywrt-tmp && sudo umount /mnt/friendlywrt-tmp
+          sudo losetup -d ${LOOP_DEVICE}  
       - name: Zip Files
         run: |
           gzip code/out/*.img
