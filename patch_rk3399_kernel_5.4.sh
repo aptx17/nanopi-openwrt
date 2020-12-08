@@ -1,4 +1,4 @@
-cd friendlywrt-rk3399
+cd code
 cd kernel/
 git apply ../../add_fullconenat.diff
 cd ../
