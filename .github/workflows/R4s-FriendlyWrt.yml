@@ -36,14 +36,14 @@ jobs:
           sudo cp repo/repo /usr/bin/
       - name: Init Source
         run: |
-          mkdir friendlywrt-rk3399
-          cd friendlywrt-rk3399
+          mkdir code
+          cd code
           repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.4 -m rk3399.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
           repo sync -c --no-tags --no-clone-bundle -j8
           cd friendlywrt/ && git fetch --unshallow
       - name: Update kernel
         run: |
-          cd friendlywrt-rk3399          
+          cd code          
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip  
       - name: Patch Kernel
@@ -51,7 +51,7 @@ jobs:
           . patch_rk3399_kernel_5.4.sh
       - name: Mods
         run: |
-          cd friendlywrt-rk3399
+          cd code
           . ../remove_unused_rk3399_config.sh
           cat configs/config_rk3399 | grep "TARGET" >> ../base_rk3399.seed
           cat ../base_rk3399.seed > configs/config_rk3399
@@ -84,7 +84,7 @@ jobs:
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
       - name: Build FriendlyWrt
         run: |
-          cd friendlywrt-rk3399
+          cd code
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r4s.mk
       - name: Fix 1001
@@ -92,7 +92,7 @@ jobs:
           sudo df -lh
           lodev=$(sudo losetup -f)
           echo "found unused loop dev $lodev"
-          sudo losetup -P ${lodev} friendlywrt-rk3399/out/*.img
+          sudo losetup -P ${lodev} code/out/*.img
           sudo rm -rf /mnt/friendlywrt-tmp
           sudo mkdir -p /mnt/friendlywrt-tmp
           sudo mount ${lodev}p1 /mnt/friendlywrt-tmp
@@ -101,13 +101,13 @@ jobs:
           sudo losetup -d ${lodev}
       - name: Zip Files
         run: |
-          gzip friendlywrt-rk3399/out/*.img
+          gzip code/out/*.img
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv friendlywrt-rk3399/out/*img* ./artifact/
-          cp friendlywrt-rk3399/friendlywrt/.config ./artifact/
+          mv code/out/*img* ./artifact/
+          cp code/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
