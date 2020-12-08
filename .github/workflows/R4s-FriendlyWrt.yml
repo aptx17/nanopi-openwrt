@@ -57,8 +57,7 @@ jobs:
           cat ../base_rk3399.seed > configs/config_rk3399
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
           cd friendlywrt
-          rm -rf target/linux/ramips/dts
-          svn co https://github.com/friendlyarm/friendlywrt/trunk/target/linux/ramips/dts target/linux/ramips/dts
+          rm target/linux/ramips/dts/TL-WA801NDV5.dts target/linux/ramips/dts/TL-MR3020V3.dts target/linux/ramips/base-files/etc/board.d/01_leds
           git stash
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
