@@ -62,7 +62,7 @@ jobs:
           git checkout upstream/lede-17.01 -b tmp
           git rm README.md
           git commit -m 'reset'
-          git checkout master-v19.07.4
+          git checkout master-v19.07.1
           git rebase ddc262bd6a78ab1231177b51633da24bbf99e317^ --onto tmp -X theirs          
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
@@ -79,6 +79,7 @@ jobs:
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
+          wget https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/package/base-files/files/root/setup.sh package/base-files/files/root/setup.sh
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
