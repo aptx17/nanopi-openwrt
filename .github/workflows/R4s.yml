@@ -49,13 +49,17 @@ jobs:
       - name: Merge LEDE
         run: |
           cd code/friendlywrt
-          rm target/linux/ramips/dts/TL-WA801NDV5.dts target/linux/ramips/dts/TL-MR3020V3.dts target/linux/ramips/base-files/etc/board.d/01_leds
-          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
-          rm  target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
-          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
+          git checkout upstream/lede-17.01 -b tmp
+          git rm README.md
+          git commit -m 'reset'
+          git checkout master-v19.07.1
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
+          rm target/linux/rockchip-rk3399/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          rm -rf package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
       - name: Install Extra Packages
         run: |
           cd code/friendlywrt/package
@@ -95,7 +99,8 @@ jobs:
         run: |
           cd code/friendlywrt
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase=/luci-static/bootstrap' package/lean/default-settings/files/zzz-default-settings
-          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config          
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
+          sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile          
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile          
