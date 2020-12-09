@@ -62,8 +62,8 @@ jobs:
           git checkout upstream/lede-17.01 -b tmp
           git rm README.md
           git commit -m 'reset'
-          git checkout master-v19.07.1
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
+          git checkout master-v19.07.4
+          git rebase f67151ed40d819adc265d8441784160d3c12e0c2^ --onto tmp -X theirs
           rm target/linux/rockchip-rk3399/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
