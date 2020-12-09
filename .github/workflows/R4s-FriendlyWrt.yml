@@ -63,7 +63,8 @@ jobs:
           git rm README.md
           git commit -m 'reset'
           git checkout master-v19.07.1
-          git rebase ddc262bd6a78ab1231177b51633da24bbf99e317^ --onto tmp -X theirs          
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
+          rm target/linux/rockchip-rk3399/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
           ./scripts/feeds update -a && ./scripts/feeds install -a
@@ -72,6 +73,15 @@ jobs:
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           rm -rf package/libs/openssl
           svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
+          wget -P target/linux/rockchip-rk3399/base-files/etc/modules.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/modules.d/10-8169
+          rm target/linux/rockchip-rk3399/base-files/etc/board.d/02_network
+          wget -P target/linux/rockchip-rk3399/base-files/etc/board.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/board.d/02_network
+          wget -P target/linux/rockchip-rk3399/base-files/etc/init.d https://github.com/friendlyarm/friendlywrt/blob/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/init.d/fa-rk3399-led
+          rm target/linux/rockchip-rk3399/base-files/etc/init.d/fa-rk3399-pwmfan
+          rm target/linux/rockchip-rk3399/base-files/etc/inittab
+          wget -P target/linux/rockchip-rk3399/base-files/etc https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/inittab
+          wget -P target/linux/rockchip-rk3399/base-files/etc/init.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/init.d/fa-rk3399-netdev-cpu
+          wget -P target/linux/rockchip-rk3399/base-files/etc/rc.d https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/target/linux/rockchip-rk3399/base-files/etc/rc.d/S99fa-rk3399-netdev-cpu
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
@@ -79,7 +89,6 @@ jobs:
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
-          wget -P package/base-files/files/root https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.4/package/base-files/files/root/setup.sh          
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
