@@ -45,7 +45,15 @@ jobs:
         run: |
           cd code          
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip            
+          mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3399/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
+          mv ../scripts/back/rk3399/host.c kernel/drivers/usb/dwc3
+          mv ../scripts/back/rk3399/dwc3.txt kernel/Documentation/devicetree/bindings/usb
+          mv ../scripts/back/rk3399/core.c kernel/drivers/usb/dwc3
+          mv ../scripts/back/rk3399/core.h kernel/drivers/usb/dwc3
+          mv ../scripts/back/rk3399/xhci.h kernel/drivers/usb/host
+          mv ../scripts/back/rk3399/xhci-plat.c kernel/drivers/usb/host
+          mv ../scripts/back/rk3399/xhci-ring.c kernel/drivers/usb/host            
       - name: Patch Kernel
         run: |
           . patch_rk3399_kernel_5.4.sh
