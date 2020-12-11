@@ -43,7 +43,8 @@ jobs:
           cd friendlywrt/ && git fetch --unshallow
       - name: Update kernel
         run: |
-          cd code          
+          cd code
+          sed -i 's/8169/8168/g' kernel/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts          
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
@@ -84,7 +85,7 @@ jobs:
           svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
           rm -rf feeds/packages/admin/htop
           svn co https://github.com/project-openwrt/packages/trunk/admin/htop feeds/packages/admin/htop
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
