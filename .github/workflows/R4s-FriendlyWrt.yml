@@ -74,9 +74,7 @@ jobs:
           rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           rm -rf package/libs/openssl
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
-          rm -rf feeds/packages/admin/htop
-          svn co https://github.com/project-openwrt/packages/branches/10cef52bae4c37015535bddaa8973f658d05ea32/admin/htop feeds/packages/admin/htop
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl          
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
