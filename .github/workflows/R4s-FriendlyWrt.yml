@@ -47,7 +47,7 @@ jobs:
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
-          mv ../scripts/r8169_main.c kernel/drivers/net/ethernet/realtek   
+          #mv ../scripts/r8169_main.c kernel/drivers/net/ethernet/realtek   
       - name: Patch Kernel
         run: |
           . patch_rk3399_kernel_5.4.sh
