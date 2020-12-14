@@ -47,8 +47,6 @@ jobs:
           mv ../scripts/nanopi4_linux_defconfig kernel/arch/arm64/configs
           mv ../scripts/rk3399.dtsi kernel/arch/arm64/boot/dts/rockchip
           mv ../scripts/rk3399-opp.dtsi kernel/arch/arm64/boot/dts/rockchip
-          rm -rf kernel/drivers/net/ethernet/realtek
-          svn co https://github.com/aptx17/nanopi-openwrt/trunk/scripts/back/rk3399/realtek kernel/drivers/net/ethernet/realtek
       - name: Patch Kernel
         run: |
           . patch_rk3399_kernel_5.4.sh
@@ -76,7 +74,7 @@ jobs:
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           rm -rf package/libs/openssl
           svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl          
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
