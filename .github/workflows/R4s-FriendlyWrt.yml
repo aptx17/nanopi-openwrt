@@ -109,8 +109,7 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv code/out/*img* ./artifact/
-          cp code/friendlywrt/.config ./artifact/
+          mv code/out/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
