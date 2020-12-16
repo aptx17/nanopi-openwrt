@@ -63,7 +63,7 @@ jobs:
           git checkout upstream/lede-17.01 -b tmp
           git rm README.md
           git commit -m 'reset'
-          git checkout master-v19.07.1
+          git checkout master-v19.07.4
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
           rm target/linux/rockchip-rk3399/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
@@ -74,10 +74,10 @@ jobs:
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           rm -rf package/libs/openssl
           svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl          
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
           cd package/lean/
           rm -rf luci-theme-argon
           git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
@@ -85,7 +85,6 @@ jobs:
           sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config          
-          sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
           sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
