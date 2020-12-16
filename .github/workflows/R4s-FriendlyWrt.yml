@@ -109,7 +109,8 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv code/out/
+          ls code/out
+          mv code/out ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
