@@ -59,8 +59,8 @@ jobs:
           sed -i 's,ACCEPT,REJECT,g' device/friendlyelec/rk3399/default-settings/install.sh
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git checkout upstream/lede-17.01 -b tmp
+          git remote add upstream https://github.com/openwrt/openwrt && git fetch upstream
+          git checkout upstream/master -b tmp
           git rm README.md
           git commit -m 'reset'
           git checkout master-v19.07.1
@@ -72,22 +72,23 @@ jobs:
           rm -rf feeds/packages/libs/libcap/ && svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
           rm -rf feeds/packages/lang/golang/ && svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang feeds/packages/lang/golang
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
-          rm -rf package/libs/openssl
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl          
+          #rm -rf package/libs/openssl
+          #svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/r8168 package/r8168   
           #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
           wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
-          cd package/lean/
-          rm -rf luci-theme-argon
-          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
-          cd ../../
-          sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
-          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
+          #cd package/lean/
+          #rm -rf luci-theme-argon
+          #git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
+          #cd ../../
+          #sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
+          #sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config          
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
-          sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
+          #sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
       - name: Build FriendlyWrt
         run: |
           cd code
