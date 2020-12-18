@@ -63,9 +63,8 @@ jobs:
           git checkout upstream/master -b tmp
           git rm README.md
           git commit -m 'reset'
-          git checkout master-v19.07.1
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto tmp -X theirs
-          rm target/linux/rockchip-rk3399/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
+          git checkout master-v19.07.4
+          git rebase f8989dc0a51d8cec467cbd74b6b3b11d3fa32d8c^ --onto tmp -X theirs          
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           curl 'https://git.openwrt.org/?p=openwrt/openwrt.git;a=patch;h=22378beb581b113def1dc392ef75306a2168a163' | git apply --reject - || true
           ./scripts/feeds update -a && ./scripts/feeds install -a
@@ -76,9 +75,9 @@ jobs:
           #svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
           svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/r8168 package/r8168   
           #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/2a9513617246b4136c07f4c43792970a09df33c6.patch | patch -p1        
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
-          wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/ddc262bd6a78ab1231177b51633da24bbf99e317.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/5f2aefc10936a2277b6554e9852c19f731539706.patch | patch -p1
+          #wget -qO - https://github.com/friendlyarm/friendlywrt/commit/c6dd7c3fbc8fed037a6862f1dfa252fe453f0ee2.patch | patch -p1
           #cd package/lean/
           #rm -rf luci-theme-argon
           #git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
