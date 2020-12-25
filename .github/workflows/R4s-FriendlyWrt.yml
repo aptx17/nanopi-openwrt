@@ -115,5 +115,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NanoPi-R4S-FriendlyWrt-test-1
+          name: NanoPi-R4S-FriendlyWrt-test-2
           path: ./artifact/
