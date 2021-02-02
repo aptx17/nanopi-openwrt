@@ -55,7 +55,13 @@ jobs:
           mv ../scripts/back/xhci.h kernel/drivers/usb/host
           mv ../scripts/back/xhci-plat.c kernel/drivers/usb/host
           mv ../scripts/back/xhci-ring.c kernel/drivers/usb/host
-          mv ../scripts/back/rk3328-nanopi-r2-common.dtsi kernel/arch/arm64/boot/dts/rockchip     
+          mv ../scripts/back/rk3328-nanopi-r2-common.dtsi kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev00.dts kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev02.dts kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev03.dts kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev04.dts kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev20.dts kernel/arch/arm64/boot/dts/rockchip
+          mv ../scripts/back/rk3328-nanopi-r2-rev21.dts kernel/arch/arm64/boot/dts/rockchip     
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
