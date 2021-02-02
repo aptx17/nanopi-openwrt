@@ -75,7 +75,8 @@ jobs:
           git checkout upstream/master -- feeds.conf.default
           sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
-          wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
+          wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch
+          git apply fullconenat-switch.patch
           cd package/lean/
           rm -rf coremark
           svn co https://github.com/project-openwrt/packages/trunk/utils/coremark ./coremark
