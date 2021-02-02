@@ -49,7 +49,6 @@ jobs:
           mv ../scripts/back/stmmac_main.c kernel/drivers/net/ethernet/stmicro/stmmac
           mv ../scripts/back/host.c kernel/drivers/usb/dwc3
           mv ../scripts/back/r8152.c kernel/drivers/net/usb
-          mv ../scripts/back/dwc3.txt kernel/Documentation/devicetree/bindings/usb
           mv ../scripts/back/core.c kernel/drivers/usb/dwc3
           mv ../scripts/back/core.h kernel/drivers/usb/dwc3
           mv ../scripts/back/xhci.h kernel/drivers/usb/host
