@@ -483,7 +483,7 @@
 
 			trips {
 				threshold: trip-point0 {
-					temperature = <70000>;
+					temperature = <80000>;
 					hysteresis = <2000>;
 					type = "passive";
 				};
