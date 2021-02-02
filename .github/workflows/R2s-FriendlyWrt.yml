@@ -72,11 +72,10 @@ jobs:
           git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/lede-17.01 -X theirs
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
-          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          ./scripts/feeds update -a && ./scripts/feeds install -a
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
-          wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch
-          git apply fullconenat-switch.patch
+          wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           cd package/lean/
           rm -rf coremark
           svn co https://github.com/project-openwrt/packages/trunk/utils/coremark ./coremark
