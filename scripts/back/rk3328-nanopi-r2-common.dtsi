@@ -262,7 +262,6 @@
 	snps,txpbl = <0x4>;
 	tx_delay = <0x24>;
 	rx_delay = <0x18>;
-	handle_cpu_id = <1>;
 	status = "okay";
 
 	mdio {
@@ -400,10 +399,6 @@
 	vccio5-supply = <&vcc_io>;
 	vccio6-supply = <&vcc_18>;
 	pmuio-supply = <&vcc_io>;
-};
-
-&rng {
-	status = "okay";
 };
 
 &pinctrl {
@@ -618,13 +613,8 @@
 
 &usbdrd_dwc3 {
 	status = "okay";
-	handle_cpu_id = <2>;
 	#address-cells = <1>;
 	#size-cells = <0>;
-
-	snps,dis-tx-ipgap-linecheck-quirk;
-	snps,xhci-slow-suspend-quirk;
-	snps,xhci-trb-ent-quirk;
 
 	r8153: device@2 {
 		compatible = "usbbda:8153";
