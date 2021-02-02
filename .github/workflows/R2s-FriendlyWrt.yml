@@ -73,18 +73,16 @@ jobs:
           git checkout upstream/master -- feeds.conf.default
           sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           cd package/lean/
-          rm -rf luci-theme-argon
-          git clone -b master --single-branch https://github.com/garypang13/luci-theme-edge
+          rm -rf coremark
+          svn co https://github.com/project-openwrt/packages/trunk/utils/coremark ./coremark
+          rm -rf luci-app-arpbind
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind ./luci-app-arpbind
           cd ../../
-          sed -i 's/@LINUX_5_4//' package/lean/luci-app-flowoffload/Makefile
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
-          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
-          sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
-          sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
-          echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
