@@ -5,6 +5,8 @@ uci commit luci
 
 uci set system.@system[0].timezone=CST-8
 uci set system.@system[0].zonename=Asia/Shanghai
+uci set system.@system[0].conloglevel='1'
+uci set system.@system[0].cronloglevel='9'
 uci commit system
 
 uci set fstab.@global[0].anon_mount=1
@@ -29,24 +31,37 @@ sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
 
 ln -sf /sbin/ip /usr/bin/ip
 
-sed -i 's#http://downloads.openwrt.org#https://mirrors.cloud.tencent.com/lede#g' /etc/opkg/distfeeds.conf
 sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow
 
 sed -i "s/# //g" /etc/opkg/distfeeds.conf
-sed -i '/openwrt_luci/ { s/snapshots/releases\/18.06.8/g; }'  /etc/opkg/distfeeds.conf
 
-sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
-echo "iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
-echo "iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
-
-sed -i '/option disabled/d' /etc/config/wireless
-sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
-
-sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_REVISION='R20.12.12'" >> /etc/openwrt_release
-sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
-
+#Disable BBR
+sed -i 's/net.ipv4.tcp_congestion_control=bbr/#net.ipv4.tcp_congestion_control=bbr/g' /etc/sysctl.d/12-tcp-bbr.conf
+sysctl -p
+#uhttpd
+uci set uhttpd.main.rfc1918_filter=0
+uci set uhttpd.main.redirect_https=0
+uci del uhttpd.main.listen_https
+uci del uhttpd.main.cert
+uci del uhttpd.main.key
+uci commit uhttpd
+/etc/init.d/uhttpd restart
+#network
+uci set network.lan.ipaddr='192.168.2.1'
+uci del network.globals.ula_prefix
+uci commit network
+/etc/init.d/network restart
+#upnp
+uci set upnpd.config.enabled='0'
+uci del upnpd.config.enable_upnp
+uci del upnpd.config.enable_natpmp
+uci set upnpd.config.external_iface='wan'
+uci commit upnpd
+#dnsmasq
+uci del dhcp.@dnsmasq[0].rebind_protection='1'
+uci set dhcp.@dnsmasq[0].quietdhcp='1'
+uci set dhcp.@dnsmasq[0].sequential_ip='1'
+uci commit dhcp
 sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 
