@@ -45,7 +45,8 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip    
+          mv ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip  
+          mv ../scripts/back/host.c kernel/drivers/usb/dwc3  
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -65,13 +66,14 @@ jobs:
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           ./scripts/feeds update -a && ./scripts/feeds install -a
           wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
-          wget https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
+          wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
+          wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
           cd package/lean/
           rm -rf coremark
           svn co https://github.com/project-openwrt/packages/trunk/utils/coremark ./coremark
-          rm -rf luci-app-arpbind
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind ./luci-app-arpbind
-          cd ../../
+          rm -rf autocore
+          svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore ./autocore
+          cd ../../       
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
