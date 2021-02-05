@@ -85,7 +85,7 @@ jobs:
           ./build.sh nanopi_r2s.mk
       - name: Fix 1001
         run: |
-          lodev=$(sudo losetup -P -f --show code/out/*.img)
+          lodev=$(sudo losetup -P -f --show friendlywrt-rk3328/out/*.img)
           sudo rm -rf /mnt/friendlywrt-tmp
           sudo mkdir -p /mnt/friendlywrt-tmp
           sudo mount "$lodev""p8" /mnt/friendlywrt-tmp
