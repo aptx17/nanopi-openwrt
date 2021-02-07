@@ -20,7 +20,7 @@ index 5a012b998..dafbe6b92 100644
  uci commit system
  
  uci set fstab.@global[0].anon_mount=1
-@@ -29,24 +31,37 @@ sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
+@@ -29,24 +31,38 @@ sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
  
  ln -sf /sbin/ip /usr/bin/ip
  
