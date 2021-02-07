@@ -62,6 +62,7 @@ index 5a012b998..dafbe6b92 100644
 +uci set upnpd.config.enabled='0'
 +uci del upnpd.config.enable_upnp
 +uci del upnpd.config.enable_natpmp
++uci del upnpd.config.igdv1
 +uci set upnpd.config.external_iface='wan'
 +uci commit upnpd
 +#dnsmasq
