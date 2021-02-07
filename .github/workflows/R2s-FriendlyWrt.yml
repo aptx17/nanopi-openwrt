@@ -74,6 +74,11 @@ jobs:
           rm -rf autocore
           svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore ./autocore
           sed -i 's/TARGET_rockchip/TARGET_rockchip_rk3328/g' ./autocore/Makefile
+          sed -i 's,boardinfo.model + cpubench.cpubench,"FriendlyElec NanoPi R2S®",g' ./autocore/files/arm/rpcd_10_system.js
+          sed -i 's,cpuinfo.cpuinfo,"RK3328 SoC ARMv8-A Cortex-A53 Quad-Core @ 1.5GHz",g' ./autocore/files/arm/rpcd_10_system.js
+          sed -i "/Firmware Version/i\\\t\t\t_('CPU Info'),         cpuinfo.cpuinfo + cpubench.cpubench," ./autocore/files/arm/rpcd_10_system.js
+          sed -i "/_('CPU usage (%)'),    cpuusage.cpuusage/d" ./autocore/files/arm/rpcd_10_system.js
+          sed -i 's/echo -n "${cpu_arch} x ${cpu_cores} (${big_cpu_freq}${cpu_freq}, ${cpu_temp})"/echo -n "${cpu_freq} | ${cpu_temp} | "/g' ./autocore/files/arm/cpuinfo
           cd ../../       
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/Os/O3/g' include/target.mk
@@ -95,11 +100,14 @@ jobs:
           sudo chown -R root:root /mnt/friendlywrt-tmp
           sudo umount /mnt/friendlywrt-tmp
           sudo losetup -d ${lodev}
+      - name: Zip Files
+        run: |
+          gzip friendlywrt-rk3328/out/*.img
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv friendlywrt-rk3328/out/*img* ./artifact/
+          mv friendlywrt-rk3328/out/*img.gz* ./artifact/
           cp friendlywrt-rk3328/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
       - name: Upload Artifact
