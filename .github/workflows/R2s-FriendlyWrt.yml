@@ -44,9 +44,9 @@ jobs:
       - name: Update kernel
         run: |
           cd friendlywrt-rk3328
-          mv ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          mv ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip  
-          mv ../scripts/back/host.c kernel/drivers/usb/dwc3  
+          cp -f ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
+          cp -f ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip  
+          cp -f ../scripts/back/host.c kernel/drivers/usb/dwc3  
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -88,7 +88,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          mv ../scripts/build-kernel.sh scripts/sd-fuse
+          cp -f ../scripts/build-kernel.sh scripts/sd-fuse
           ./build.sh nanopi_r2s.mk
       - name: Fix 1001
         run: |
