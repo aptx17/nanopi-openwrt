@@ -88,9 +88,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          sed -i '/KERNEL_3RD_DRIVERS=/d' scripts/sd-fuse/build-kernel.sh
-          sed -i '/KERNEL_3RD_DRIVER_BRANCHES=/d' scripts/sd-fuse/build-kernel.sh
-          sed -i '/KERNEL_3RD_DRIVER_NAME=/d' scripts/sd-fuse/build-kernel.sh
+          mv ../scripts/build-kernel.sh scripts/sd-fuse
           ./build.sh nanopi_r2s.mk
       - name: Fix 1001
         run: |
