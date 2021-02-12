@@ -179,20 +179,6 @@ if [ $? -ne 0 ]; then
         exit 1
 fi
 
-    # wireguard
-    (cd ${OUT} && {
-        if [ ! -d wireguard ]; then
-            git clone https://git.zx2c4.com/wireguard-linux-compat -b master wireguard
-            # old version# git clone https://git.zx2c4.com/wireguard-monolithic-historical -b master wireguard
-        fi
-        (cd wireguard/src && {
-            make CROSS_COMPILE=${CROSS_COMPILE} ARCH=${ARCH} KERNELDIR=${KERNEL_SRC}
-            ${CROSS_COMPILE}strip --strip-unneeded wireguard.ko
-            cp wireguard.ko ${KMODULES_OUTDIR}/lib/modules/${KERNEL_VER} -afv
-        })
-    })
-fi
-
 if [ ! -d ${KMODULES_OUTDIR}/lib ]; then
 	echo "not found kernel modules."
 	exit 1
