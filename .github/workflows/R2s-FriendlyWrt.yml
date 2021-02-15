@@ -68,14 +68,14 @@ jobs:
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           ./scripts/feeds update -a && ./scripts/feeds install -a
-          wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+          wget -O- https://github.com/immortalwrt/immortalwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
           cd package/lean/
           rm -rf coremark
-          svn co https://github.com/project-openwrt/packages/trunk/utils/coremark ./coremark
+          svn co https://github.com/immortalwrt/packages/trunk/utils/coremark ./coremark
           rm -rf autocore
-          svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore ./autocore
+          svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/lean/autocore ./autocore
           sed -i 's/TARGET_rockchip/TARGET_rockchip_rk3328/g' ./autocore/Makefile
           sed -i 's,boardinfo.model + cpubench.cpubench,"FriendlyElec NanoPi R2S®",g' ./autocore/files/arm/rpcd_10_system.js
           sed -i 's,cpuinfo.cpuinfo,"RK3328 SoC ARMv8-A Cortex-A53 Quad-Core @ 1.5GHz",g' ./autocore/files/arm/rpcd_10_system.js
