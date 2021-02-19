@@ -61,8 +61,8 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git checkout master-v19.07.1
           git rebase f0fc45e9f8bb9b7f3bc4b7ac1f521545d77ffaae^ --onto upstream/lede-17.01 -X theirs
+          git checkout master-v19.07.1
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           rm target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-pwmfan target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-pwmfan target/linux/rockchip-rk3328/base-files/etc/modules.d/10-bcmdhd target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8812au target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8821cu target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8822bu
           rm package/base-files/files/etc/init.d/fa-wifiap package/base-files/files/etc/rc.d/S11fa-wifiap package/base-files/files/etc/modules.d/90-8189es package/base-files/files/etc/modules.d/90-8821cu package/base-files/files/etc/modules.d/xradio_wlan package/base-files/files/usr/bin/lcd2usb_echo
