@@ -45,8 +45,8 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           cp -f ../scripts/nanopi-r2_linux_defconfig kernel/arch/arm64/configs
-          cp -f ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip  
-          cp -f ../scripts/back/host.c kernel/drivers/usb/dwc3  
+          cp -f ../scripts/back/rk3328.dtsi kernel/arch/arm64/boot/dts/rockchip
+          cp -f ../scripts/back/host.c kernel/drivers/usb/dwc3
       - name: Patch Kernel
         run: |
           . patch_kernel_5.4.sh
@@ -69,6 +69,7 @@ jobs:
           wget -O- https://github.com/immortalwrt/immortalwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
+          wget -O- https://github.com/friendlyarm/friendlywrt/commit/ca85b67303eae804d07f51b0e1dcad695d588778.patch | patch -p1
           rm -rf package/system
           svn co https://github.com/openwrt/openwrt/trunk/package/system package/system
           rm -rf package/network
