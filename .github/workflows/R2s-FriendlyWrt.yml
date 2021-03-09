@@ -64,8 +64,6 @@ jobs:
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           rm target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-pwmfan target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-pwmfan target/linux/rockchip-rk3328/base-files/etc/modules.d/10-bcmdhd target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8812au target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8821cu target/linux/rockchip-rk3328/base-files/etc/modules.d/10-rtl8822bu
           rm package/base-files/files/etc/init.d/fa-wifiap package/base-files/files/etc/rc.d/S11fa-wifiap package/base-files/files/etc/modules.d/90-8189es package/base-files/files/etc/modules.d/90-8821cu package/base-files/files/etc/modules.d/xradio_wlan package/base-files/files/usr/bin/lcd2usb_echo
-          rm -rf package/system
-          svn co https://github.com/openwrt/openwrt/trunk/package/system package/system
           rm -rf package/network
           svn co https://github.com/openwrt/openwrt/trunk/package/system package/network
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
