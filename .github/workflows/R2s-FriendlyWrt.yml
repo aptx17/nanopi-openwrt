@@ -67,7 +67,7 @@ jobs:
           rm -rf package/system
           svn co https://github.com/coolsnowwolf/lede/trunk/package/system package/system
           rm -rf package/network
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/system package/network
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/network package/network
           git checkout upstream/master -- feeds.conf.default && sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           ./scripts/feeds update -a && ./scripts/feeds install -a
           #wget -O- https://github.com/immortalwrt/immortalwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
