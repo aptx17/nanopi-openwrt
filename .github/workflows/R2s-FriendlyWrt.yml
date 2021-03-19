@@ -70,12 +70,11 @@ jobs:
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
           wget -O- https://github.com/friendlyarm/friendlywrt/commit/ca85b67303eae804d07f51b0e1dcad695d588778.patch | patch -p1
-          rm -rf package/network/services/dnsmasq package/network/services/relayd package/network/ipv6/odhcp6c package/network/config/netifd package/network/services/odhcpd package/network/utils/iptables package/network/utils/iproute2 package/network/utils/ethtool package/network/utils/ipset package/network/services/umdns 
+          rm -rf package/network/services/dnsmasq package/network/ipv6 package/network/config/netifd package/network/services/odhcpd package/network/utils/iptables package/network/utils/iproute2 package/network/utils/ethtool package/network/utils/ipset package/network/services/umdns 
           svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/dnsmasq package/network/services/dnsmasq
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/ipv6/odhcp6c package/network/ipv6/odhcp6c
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/services/relayd package/network/services/relayd
+          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/ipv6 package/network/ipv6
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/config/netifd package/network/config/netifd
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/services/odhcpd package/network/services/odhcpd
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/odhcpd package/network/services/odhcpd
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/iptables package/network/utils/iptables
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/iproute2 package/network/utils/iproute2
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/ethtool package/network/utils/ethtool
