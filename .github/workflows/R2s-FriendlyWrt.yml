@@ -78,7 +78,7 @@ jobs:
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/iproute2 package/network/utils/iproute2
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/ethtool package/network/utils/ethtool
           rm -rf package/libs/mbedtls
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/mbedtls package/libs/mbedtls
+          svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/libs/mbedtls package/libs/mbedtls
           cd package/lean/
           rm -rf coremark
           svn co https://github.com/immortalwrt/packages/trunk/utils/coremark ./coremark
@@ -92,6 +92,7 @@ jobs:
           sed -i 's/echo -n "${cpu_arch} x ${cpu_cores} (${big_cpu_freq}${cpu_freq}, ${cpu_temp})"/echo -n "${cpu_freq} | ${cpu_temp} | "/g' ./autocore/files/arm/cpuinfo
           cd ../../       
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
+          sed -i "/usr/bin/lcd2usb_echo &/d" package/base-files/files/etc/rc.local
           sed -i 's,-mcpu=cortex-a53,-march=armv8-a+crypto+crc -mabi=lp64,g' include/target.mk
           sed -i 's/Os/O3/g' include/target.mk
           sed -i 's/O2/O3/g' ./rules.mk
