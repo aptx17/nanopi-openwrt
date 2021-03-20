@@ -101,6 +101,7 @@ jobs:
           cd friendlywrt-rk3328
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           rm scripts/sd-fuse/prebuilt/firmware/system.tgz
+          cp -f ../scripts/lib.tgz scripts/sd-fuse/prebuilt/firmware
           cp -f ../scripts/setup_boot_and_rootfs.sh scripts/sd-fuse/tools
           cp -f ../scripts/build-kernel.sh scripts/sd-fuse
           ./build.sh nanopi_r2s.mk
