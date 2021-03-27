@@ -69,7 +69,7 @@ jobs:
           wget -O- https://github.com/immortalwrt/immortalwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
-          rm -rf package/network/ipv6 package/network/config/netifd package/network/utils/iproute2 package/network/utils/ethtool target/linux/rockchip-rk3328/base-files/etc/hotplug.d/iface/12-disable-rk3328-eth-offloading
+          rm -rf package/network/ipv6 package/network/utils/ethtool target/linux/rockchip-rk3328/base-files/etc/hotplug.d/iface/12-disable-rk3328-eth-offloading
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/ipv6 package/network/ipv6
           svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/ethtool package/network/utils/ethtool
           wget -P package/base-files/files/etc/init.d/ https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fa-rk3328-misc 
