@@ -1,0 +1,24 @@
+From e13fe930b17a3dc48b2c5c22532e596a48625996 Mon Sep 17 00:00:00 2001
+From: aptx17 <41042297+aptx17@users.noreply.github.com>
+Date: Sun, 28 Mar 2021 10:41:10 +0800
+Subject: [PATCH] Create fa-rk3328-misc
+
+---
+ scripts/fa-rk3328-misc | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+ create mode 100644 scripts/fa-rk3328-misc
+
+diff --git a/package/base-files/files/etc/init.d/fa-rk3328-misc b/package/base-files/files/etc/init.d/fa-rk3328-misc
+new file mode 100644
+index 000000000..b3d389f49
+--- /dev/null
++++ b/package/base-files/files/etc/init.d/fa-rk3328-misc
+@@ -0,0 +1,8 @@
++#!/bin/sh /etc/rc.common
++
++START=96
++ 
++start() {
++    #Disabed rk3328 ethernet tcp/udp offloading tx/rx
++    ethtool -K eth0 rx off tx off
++}
