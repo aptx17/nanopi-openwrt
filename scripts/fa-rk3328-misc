@@ -1,0 +1,8 @@
+#!/bin/sh /etc/rc.common
+
+START=96
+ 
+start() {
+    #Disabed rk3328 ethernet tcp/udp offloading tx/rx
+    ethtool -K eth0 rx off tx off
+}
