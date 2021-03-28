@@ -88,7 +88,7 @@ jobs:
           sed -i "/_('CPU usage (%)'),    cpuusage.cpuusage/d" ./autocore/files/arm/rpcd_10_system.js
           sed -i 's/echo -n "${cpu_arch} x ${cpu_cores} (${big_cpu_freq}${cpu_freq}, ${cpu_temp})"/echo -n "${cpu_freq} | ${cpu_temp} | "/g' ./autocore/files/arm/cpuinfo
           cd ../../
-          cp -f ../scripts/fa-rk3328-misc target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
+          cp -f ../../scripts/fa-rk3328-misc target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
           wget -P target/linux/rockchip-rk3328/base-files/etc/rc.d/ https://raw.githubusercontent.com/friendlyarm/friendlywrt/0ef1aa8c5ac25207a461628f6e56da3f5633ceb1/target/linux/rockchip-rk3328/base-files/etc/rc.d/S96fa-rk3328-misc
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i '\|^/usr/bin/lcd2usb_echo &|d' package/base-files/files/etc/rc.local
