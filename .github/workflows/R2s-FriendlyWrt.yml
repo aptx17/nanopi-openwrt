@@ -68,6 +68,7 @@ jobs:
           ./scripts/feeds update -a && ./scripts/feeds install -a
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
+          wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/dnsmasq-add-filter-aaaa-option.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/luci-add-filter-aaaa-option.patch | patch -p1
           wget -P package/base-files/files/etc/init.d/ https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fa-rk3328-misc
           chmod 755 package/base-files/files/etc/init.d/fa-rk3328-misc
@@ -91,6 +92,7 @@ jobs:
           sed -i "/_('CPU usage (%)'),    cpuusage.cpuusage/d" ./autocore/files/arm/rpcd_10_system.js
           sed -i 's/echo -n "${cpu_arch} x ${cpu_cores} (${big_cpu_freq}${cpu_freq}, ${cpu_temp})"/echo -n "${cpu_freq} | ${cpu_temp} | "/g' ./autocore/files/arm/cpuinfo
           cd ../../
+          cp -f ../../scripts/boot package/base-files/files/etc/init.d/
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/bootstrap"' package/lean/default-settings/files/zzz-default-settings
           sed -i '\|^/usr/bin/lcd2usb_echo &|d' package/base-files/files/etc/rc.local
           sed -i 's/Os/O3/g' include/target.mk
