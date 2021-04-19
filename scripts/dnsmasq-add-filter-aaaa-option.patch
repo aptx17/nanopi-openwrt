@@ -23,11 +23,11 @@ diff --git a/package/network/services/dnsmasq/files/dnsmasq.init b/package/netwo
 index 06d83b06deb..08ff64d659f 100644
 --- a/package/network/services/dnsmasq/files/dnsmasq.init
 +++ b/package/network/services/dnsmasq/files/dnsmasq.init
-@@ -896,7 +896,7 @@ 	append_bool "$cfg" noping "--no-ping"
-	append_bool "$cfg" rapidcommit "--dhcp-rapid-commit"
-	append_bool "$cfg" scriptarp "--script-arp"
-
+@@ -829,7 +829,7 @@ dnsmasq_start()
+ 	append_bool "$cfg" allservers "--all-servers"
+ 	append_bool "$cfg" noping "--no-ping"
+ 	
 -	append_bool "$cfg" filter_aaaa "--filter-aaaa"
 +	append_bool "$cfg" filteraaaa "--filter-aaaa"
-
-	append_parm "$cfg" logfacility "--log-facility"
+ 
+ 	append_parm "$cfg" logfacility "--log-facility"
