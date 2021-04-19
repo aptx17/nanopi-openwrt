@@ -69,15 +69,7 @@ jobs:
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fullconenat-switch.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/zzz-default-settings.patch | patch -p1
           wget -P package/base-files/files/etc/init.d/ https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/fa-rk3328-misc
-          chmod 755 package/base-files/files/etc/init.d/fa-rk3328-misc
-          rm -rf package/network/services/dnsmasq package/network/ipv6 package/network/config/netifd package/network/services/odhcpd package/network/utils/iptables package/network/utils/iproute2 package/network/utils/ethtool 
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/dnsmasq package/network/services/dnsmasq
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/ipv6 package/network/ipv6
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/config/netifd package/network/config/netifd
-          svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/odhcpd package/network/services/odhcpd
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/iptables package/network/utils/iptables
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/iproute2 package/network/utils/iproute2
-          svn co https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/network/utils/ethtool package/network/utils/ethtool
+          chmod 755 package/base-files/files/etc/init.d/fa-rk3328-misc        
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/dnsmasq-add-filter-aaaa-option.patch | patch -p1
           wget -O- https://raw.githubusercontent.com/aptx17/nanopi-openwrt/master/scripts/luci-add-filter-aaaa-option.patch | patch -p1
           cd package/lean/
@@ -85,6 +77,7 @@ jobs:
           svn co https://github.com/immortalwrt/packages/trunk/utils/coremark ./coremark
           rm -rf autocore
           svn co https://github.com/immortalwrt/immortalwrt/branches/master/package/lean/autocore ./autocore
+          cp -f ../../../../scripts/rpcd_10_system.js ./autocore/files/arm/          
           sed -i 's/TARGET_rockchip/TARGET_rockchip_rk3328/g' ./autocore/Makefile
           sed -i 's,boardinfo.model + cpubench.cpubench,"FriendlyElec NanoPi R2S®",g' ./autocore/files/arm/rpcd_10_system.js
           sed -i 's,cpuinfo.cpuinfo,"RK3328 SoC ARMv8-A Cortex-A53 Quad-Core @ 1.5GHz",g' ./autocore/files/arm/rpcd_10_system.js
