@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/R2s-FriendlyWrt.yml'
 #  schedule:
- #   - cron: '00 00 * * *'
+ #   - cron: '00 01 * * *'
    
 jobs:
   build:
